@@ -1,0 +1,792 @@
+//
+//
+// Description: This file is part of FET
+//
+//
+// Author: Liviu Lalescu (Please see https://lalescu.ro/liviu/ for details about contacting Liviu Lalescu (in particular, you can find there the email address))
+// Copyright (C) 2003 Liviu Lalescu <https://lalescu.ro/liviu/>
+//
+/***************************************************************************
+ *                                                                         *
+ *   This program is free software: you can redistribute it and/or modify  *
+ *   it under the terms of the GNU Affero General Public License as        *
+ *   published by the Free Software Foundation, version 3 of the License.  *
+ *                                                                         *
+ ***************************************************************************/
+
+#include "timetable_defs.h"
+#include "timetable.h"
+#include "fet.h"
+#include "teachersform.h"
+#include "addteacherform.h"
+#include "modifyteacherform.h"
+#include "teacher.h"
+#include "teachersubjectsqualificationsform.h"
+
+#include "utilities.h"
+
+#include <QMessageBox>
+
+#include <Qt>
+#include <QShortcut>
+#include <QKeySequence>
+
+#include <QListWidget>
+#include <QAbstractItemView>
+
+#include <QSplitter>
+#include <QSettings>
+#include <QObject>
+#include <QMetaObject>
+
+#include <QInputDialog>
+
+#include <QScrollBar>
+
+#include <QHash>
+#include <QSet>
+#include <QPair>
+
+QString listsOfDaysAndHoursToTable(Rules& r, const QList<int>& days, const QList<int>& hours, bool direct, bool notAvailable, bool colors); //implemented in timeconstraint.cpp
+
+extern const QString COMPANY;
+extern const QString PROGRAM;
+
+extern bool students_schedule_ready;
+extern bool rooms_buildings_schedule_ready;
+extern bool teachers_schedule_ready;
+
+TeachersForm::TeachersForm(QWidget* parent): QDialog(parent)
+{
+	setupUi(this);
+	
+	currentTeacherTextEdit->setReadOnly(true);
+
+	modifyTeacherPushButton->setDefault(true);
+
+	teachersListWidget->setSelectionMode(QAbstractItemView::SingleSelection);
+
+	connect(modifyTeacherPushButton, &QPushButton::clicked, this, &TeachersForm::modifyTeacher);
+	connect(closePushButton, &QPushButton::clicked, this, &TeachersForm::close);
+	connect(addTeacherPushButton, &QPushButton::clicked, this, &TeachersForm::addTeacher);
+
+	connect(targetNumberOfHoursPushButton, &QPushButton::clicked, this, &TeachersForm::targetNumberOfHours);
+	connect(qualifiedSubjectsPushButton, &QPushButton::clicked, this, &TeachersForm::qualifiedSubjects);
+	connect(importQualifiedSubjectsPushButton, &QPushButton::clicked, this, &TeachersForm::importQualifiedSubjects);
+
+	connect(moveTeacherUpPushButton, &QPushButton::clicked, this, &TeachersForm::moveTeacherUp);
+	connect(moveTeacherDownPushButton, &QPushButton::clicked, this, &TeachersForm::moveTeacherDown);
+
+	connect(sortTeachersPushButton, &QPushButton::clicked, this, &TeachersForm::sortTeachers);
+	connect(removeTeacherPushButton, &QPushButton::clicked, this, &TeachersForm::removeTeacher);
+
+	connect(activateTeacherPushButton, &QPushButton::clicked, this, &TeachersForm::activateTeacher);
+	connect(deactivateTeacherPushButton, &QPushButton::clicked, this, &TeachersForm::deactivateTeacher);
+	connect(teachersListWidget, &QListWidget::itemDoubleClicked, this, &TeachersForm::modifyTeacher);
+
+	connect(longNamePushButton, &QPushButton::clicked, this, &TeachersForm::longName);
+	connect(codePushButton, &QPushButton::clicked, this, &TeachersForm::code);
+	connect(commentsPushButton, &QPushButton::clicked, this, &TeachersForm::comments);
+
+	if(SHORTCUT_PLUS){
+		QShortcut* addShortcut=new QShortcut(QKeySequence(Qt::Key_Plus), this);
+		connect(addShortcut, &QShortcut::activated, [=]{addTeacherPushButton->animateClick();});
+		//if(SHOW_TOOL_TIPS)
+		//	addTeacherPushButton->setToolTip(QString("+"));
+	}
+	if(SHORTCUT_M){
+		QShortcut* modifyShortcut=new QShortcut(QKeySequence(Qt::Key_M), this);
+		connect(modifyShortcut, &QShortcut::activated, [=]{modifyTeacherPushButton->animateClick();});
+		//if(SHOW_TOOL_TIPS)
+		//	modifyTeacherPushButton->setToolTip(QString("M"));
+	}
+	if(SHORTCUT_DELETE){
+		QShortcut* removeShortcut=new QShortcut(QKeySequence::Delete, this);
+		connect(removeShortcut, &QShortcut::activated, [=]{removeTeacherPushButton->animateClick();});
+		//if(SHOW_TOOL_TIPS)
+		//	removeTeacherPushButton->setToolTip(QString("⌦"));
+	}
+	if(SHORTCUT_A){
+		QShortcut* activateShortcut=new QShortcut(QKeySequence(Qt::Key_A), this);
+		connect(activateShortcut, &QShortcut::activated, [=]{activateTeacherPushButton->animateClick();});
+		//if(SHOW_TOOL_TIPS)
+		//	activateTeacherPushButton->setToolTip(QString("A"));
+	}
+	if(SHORTCUT_D){
+		QShortcut* deactivateShortcut=new QShortcut(QKeySequence(Qt::Key_D), this);
+		connect(deactivateShortcut, &QShortcut::activated, [=]{deactivateTeacherPushButton->animateClick();});
+		//if(SHOW_TOOL_TIPS)
+		//	deactivateTeacherPushButton->setToolTip(QString("D"));
+	}
+	if(SHORTCUT_C){
+		QShortcut* commentsShortcut=new QShortcut(QKeySequence(Qt::Key_C), this);
+		connect(commentsShortcut, &QShortcut::activated, [=]{commentsPushButton->animateClick();});
+		//if(SHOW_TOOL_TIPS)
+		//	commentsPushButton->setToolTip(QString("C"));
+	}
+	if(SHORTCUT_U){
+		QShortcut* upShortcut=new QShortcut(QKeySequence(Qt::Key_U), this);
+		connect(upShortcut, &QShortcut::activated, [=]{moveTeacherUpPushButton->animateClick();});
+		//if(SHOW_TOOL_TIPS)
+		//	moveTeacherUpPushButton->setToolTip(QString("U"));
+	}
+	if(SHORTCUT_J){
+		QShortcut* downShortcut=new QShortcut(QKeySequence(Qt::Key_J), this);
+		connect(downShortcut, &QShortcut::activated, [=]{moveTeacherDownPushButton->animateClick();});
+		//if(SHOW_TOOL_TIPS)
+		//	moveTeacherDownPushButton->setToolTip(QString("J"));
+	}
+
+	centerWidgetOnScreenAndOtherThings(this);
+	restoreFETDialogGeometry(this);
+	//restore splitter state
+	QSettings settings(COMPANY, PROGRAM);
+	if(settings.contains(this->metaObject()->className()+QString("/splitter-state")))
+		splitter->restoreState(settings.value(this->metaObject()->className()+QString("/splitter-state")).toByteArray());
+
+	colorsCheckBox->setChecked(settings.value(this->metaObject()->className()+QString("/use-colors"), "false").toBool());
+	
+	connect(colorsCheckBox, &QCheckBox::toggled, this, &TeachersForm::colorsCheckBoxToggled);
+
+	teachersListWidget->clear();
+	for(int i=0; i<gt.rules.teachersList.size(); i++){
+		Teacher* tch=gt.rules.teachersList[i];
+		teachersListWidget->addItem(tch->name);
+	}
+	
+	activeHoursHash.clear();
+	for(Teacher* tch : std::as_const(gt.rules.teachersList)){
+		assert(!activeHoursHash.contains(tch->name));
+		activeHoursHash.insert(tch->name, 0);
+	}
+	for(Activity* act : std::as_const(gt.rules.activitiesList)){
+		if(act->active){
+			for(const QString& tch : std::as_const(act->teachersNames)){
+				assert(activeHoursHash.contains(tch));
+				int td=activeHoursHash.value(tch);
+				td+=act->duration;
+				activeHoursHash.insert(tch, td);
+			}
+		}
+	}
+
+	if(teachersListWidget->count()>0){
+		teachersListWidget->setCurrentRow(0);
+		teacherChanged(0);
+	}
+	
+	connect(teachersListWidget, &QListWidget::currentRowChanged, this, &TeachersForm::teacherChanged);
+}
+
+TeachersForm::~TeachersForm()
+{
+	saveFETDialogGeometry(this);
+	//save splitter state
+	QSettings settings(COMPANY, PROGRAM);
+	settings.setValue(this->metaObject()->className()+QString("/splitter-state"), splitter->saveState());
+
+	settings.setValue(this->metaObject()->className()+QString("/use-colors"), colorsCheckBox->isChecked());
+}
+
+void TeachersForm::addTeacher()
+{
+	/*bool ok = false;
+	Teacher* tch=new Teacher();
+	tch->name = QInputDialog::getText( this, tr("Add teacher"), tr("Please enter teacher's name") ,
+	 QLineEdit::Normal, QString(), &ok );
+
+	if ( ok && !((tch->name).isEmpty()) ){
+		// user entered something and pressed OK
+		if(!gt.rules.addTeacher(tch)){
+			QMessageBox::information( this, tr("Teacher insertion dialog"),
+				tr("Could not insert item. Must be a duplicate"));
+			delete tch;
+		}
+		else{
+			teachersListWidget->addItem(tch->name);
+			teachersListWidget->setCurrentRow(teachersListWidget->count()-1);
+		}
+	}
+	else{
+		if(ok){ //the user entered nothing
+			QMessageBox::information(this, tr("FET information"), tr("Incorrect name"));
+		}
+		delete tch;// user entered nothing or pressed Cancel
+	}*/
+
+	AddTeacherForm form(this, activeHoursHash);
+	setParentAndOtherThings(&form, this);
+	form.exec();
+
+	teachersListWidget->clear();
+	for(int i=0; i<gt.rules.teachersList.size(); i++){
+		Teacher* tch=gt.rules.teachersList[i];
+		teachersListWidget->addItem(tch->name);
+	}
+
+	int i=teachersListWidget->count()-1;
+	if(i>=0)
+		teachersListWidget->setCurrentRow(i);
+	else
+		currentTeacherTextEdit->setText(QString(""));
+}
+
+void TeachersForm::removeTeacher()
+{
+	int i=teachersListWidget->currentRow();
+	if(teachersListWidget->currentRow()<0){
+		QMessageBox::information(this, tr("FET information"), tr("Invalid selected teacher"));
+		return;
+	}
+
+	QString text=teachersListWidget->currentItem()->text();
+	int teacher_ID=gt.rules.searchTeacher(text);
+	if(teacher_ID<0){
+		QMessageBox::information(this, tr("FET information"), tr("Invalid selected teacher"));
+		return;
+	}
+
+	/*if(QMessageBox::warning( this, tr("FET"),
+	 tr("Are you sure you want to delete this teacher and all related activities and constraints?"),
+	 tr("Yes"), tr("No"), QString(), 0, 1 ) == 1)
+	 return;*/
+	if(QMessageBox::warning( this, tr("FET"),
+	 tr("Are you sure you want to delete this teacher and all related activities and constraints?"),
+	 QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes) == QMessageBox::No)
+		return;
+
+	int tmp=gt.rules.removeTeacher(text);
+	if(tmp){
+		assert(activeHoursHash.contains(text));
+		activeHoursHash.remove(text);
+
+		teachersListWidget->setCurrentRow(-1);
+		QListWidgetItem* item;
+		item=teachersListWidget->takeItem(i);
+		delete item;
+
+		if(i>=teachersListWidget->count())
+			i=teachersListWidget->count()-1;
+		if(i>=0)
+			teachersListWidget->setCurrentRow(i);
+		else
+			currentTeacherTextEdit->setText(QString(""));
+
+		gt.rules.addUndoPoint(tr("Removed the teacher %1.").arg(text));
+	}
+}
+
+void TeachersForm::modifyTeacher()
+{
+	/*int i=teachersListWidget->currentRow();
+	if(teachersListWidget->currentRow()<0){
+		QMessageBox::information(this, tr("FET information"), tr("Invalid selected teacher"));
+		return;
+	}
+
+	QString initialTeacherName=teachersListWidget->currentItem()->text();
+	int teacher_ID=gt.rules.searchTeacher(initialTeacherName);
+	if(teacher_ID<0){
+		QMessageBox::information(this, tr("FET information"), tr("Invalid selected teacher"));
+		return;
+	}
+
+	bool ok = false;
+	QString finalTeacherName;
+	finalTeacherName = QInputDialog::getText( this, tr("Modify teacher"), tr("Please enter new teacher's name") ,
+	 QLineEdit::Normal, initialTeacherName, &ok);
+
+	if ( ok && !(finalTeacherName.isEmpty())){
+		// user entered something and pressed OK
+		if(gt.rules.searchTeacher(finalTeacherName)>=0){
+			QMessageBox::information( this, tr("Teacher modification dialog"),
+				tr("Could not modify item. New name must be a duplicate"));
+		}
+		else{
+			gt.rules.modifyTeacher(initialTeacherName, finalTeacherName);
+			teachersListWidget->item(i)->setText(finalTeacherName);
+			teacherChanged(teachersListWidget->currentRow());
+		}
+	}*/
+	
+	int valv=teachersListWidget->verticalScrollBar()->value();
+	int valh=teachersListWidget->horizontalScrollBar()->value();
+
+	int i=teachersListWidget->currentRow();
+	if(teachersListWidget->currentRow()<0){
+		QMessageBox::information(this, tr("FET information"), tr("Invalid selected teacher"));
+		return;
+	}
+	
+	assert(i>=0 && i<gt.rules.teachersList.count());
+	Teacher* tch=gt.rules.teachersList.at(i);
+	assert(tch->name==teachersListWidget->currentItem()->text());
+	
+	ModifyTeacherForm form(this, tch, activeHoursHash);
+	setParentAndOtherThings(&form, this);
+	form.exec();
+
+	teachersListWidget->verticalScrollBar()->setValue(valv);
+	teachersListWidget->horizontalScrollBar()->setValue(valh);
+	
+	teachersListWidget->item(i)->setText(tch->name);
+	teacherChanged(i);
+}
+
+void TeachersForm::targetNumberOfHours()
+{
+	if(teachersListWidget->currentRow()<0){
+		QMessageBox::information(this, tr("FET information"), tr("Invalid selected teacher"));
+		return;
+	}
+
+	QString teacherName=teachersListWidget->currentItem()->text();
+	int teacher_ID=gt.rules.searchTeacher(teacherName);
+	if(teacher_ID<0){
+		QMessageBox::information(this, tr("FET information"), tr("Invalid selected teacher"));
+		return;
+	}
+	
+	Teacher* tch=gt.rules.teachersList.at(teacher_ID);
+
+	bool ok = false;
+	int newTargetNumberOfHours = QInputDialog::getInt(this, tr("Target number of hours"), tr("Please enter the target number of hours for teacher %1").arg(teacherName),
+	 tch->targetNumberOfHours, 0, gt.rules.nDaysPerWeek*gt.rules.nHoursPerDay, 1, &ok);
+
+	if(ok){
+		int ot=tch->targetNumberOfHours;
+
+		// user entered something and pressed OK
+		tch->targetNumberOfHours=newTargetNumberOfHours;
+
+		gt.rules.addUndoPoint(tr("Changed the target number of hours for teacher %1 from %2 to %3.").arg(tch->name).arg(ot).arg(tch->targetNumberOfHours));
+
+		gt.rules.internalStructureComputed=false;
+		setRulesModifiedAndOtherThings(&gt.rules);
+
+		teacherChanged(teachersListWidget->currentRow());
+	}
+}
+
+void TeachersForm::qualifiedSubjects()
+{
+	if(teachersListWidget->currentRow()<0){
+		QMessageBox::information(this, tr("FET information"), tr("Invalid selected teacher"));
+		return;
+	}
+
+	QString teacherName=teachersListWidget->currentItem()->text();
+	int teacher_ID=gt.rules.searchTeacher(teacherName);
+	if(teacher_ID<0){
+		QMessageBox::information(this, tr("FET information"), tr("Invalid selected teacher"));
+		return;
+	}
+	
+	Teacher* tch=gt.rules.teachersList.at(teacher_ID);
+
+	TeacherSubjectsQualificationsForm form(this, tch);
+	setParentAndOtherThings(&form, this);
+	form.exec();
+
+	teacherChanged(teachersListWidget->currentRow());
+}
+
+void TeachersForm::importQualifiedSubjects()
+{
+	QMessageBox::StandardButton res=QMessageBox::question(this, tr("FET confirmation"),
+	 tr("Are you sure you want to import all the subject qualifications for teachers from the current activities list?"), QMessageBox::Cancel | QMessageBox::Ok);
+	if(res==QMessageBox::Cancel)
+		return;
+	
+	QHash<QString, Teacher*> allTeachersHash;
+	for(Teacher* tch : std::as_const(gt.rules.teachersList)){
+		allTeachersHash.insert(tch->name, tch);
+
+		tch->qualifiedSubjectsList.clear();
+		tch->qualifiedSubjectsHash.clear();
+	}
+	
+	QSet<QPair<QString, QString>> allTeachersSubjectsSet;
+	for(Activity* act : std::as_const(gt.rules.activitiesList)){
+		for(const QString& teacher : std::as_const(act->teachersNames)){
+			if(!allTeachersSubjectsSet.contains(QPair<QString, QString>(teacher, act->subjectName))){
+				allTeachersSubjectsSet.insert(QPair<QString, QString>(teacher, act->subjectName));
+				
+				Teacher* tch=allTeachersHash.value(teacher, nullptr);
+				assert(tch!=nullptr);
+				
+				tch->qualifiedSubjectsList.push_back(act->subjectName);
+				tch->qualifiedSubjectsHash.insert(act->subjectName, std::prev(tch->qualifiedSubjectsList.end()));
+			}
+		}
+	}
+
+	gt.rules.addUndoPoint(tr("Imported the list of qualified subjects for all teachers from the list of all activities."));
+
+	gt.rules.internalStructureComputed=false;
+	setRulesModifiedAndOtherThings(&gt.rules);
+
+	if(teachersListWidget->count()>0){
+		teachersListWidget->setCurrentRow(0);
+		teacherChanged(0);
+	}
+}
+
+void TeachersForm::moveTeacherUp()
+{
+	if(teachersListWidget->count()<=1)
+		return;
+	int i=teachersListWidget->currentRow();
+	if(i<0 || i>=teachersListWidget->count())
+		return;
+	if(i==0)
+		return;
+		
+	QString s1=teachersListWidget->item(i)->text();
+	QString s2=teachersListWidget->item(i-1)->text();
+	
+	Teacher* at1=gt.rules.teachersList.at(i);
+	Teacher* at2=gt.rules.teachersList.at(i-1);
+	
+	gt.rules.internalStructureComputed=false;
+	setRulesModifiedAndOtherThings(&gt.rules);
+	
+	teachers_schedule_ready=false;
+	students_schedule_ready=false;
+	rooms_buildings_schedule_ready=false;
+
+	teachersListWidget->item(i)->setText(s2);
+	teachersListWidget->item(i-1)->setText(s1);
+	
+	gt.rules.teachersList[i]=at2;
+	gt.rules.teachersList[i-1]=at1;
+	
+	gt.rules.addUndoPoint(tr("Moved the teacher %1 up.").arg(s1));
+
+	teachersListWidget->setCurrentRow(i-1);
+	teacherChanged(i-1);
+}
+
+void TeachersForm::moveTeacherDown()
+{
+	if(teachersListWidget->count()<=1)
+		return;
+	int i=teachersListWidget->currentRow();
+	if(i<0 || i>=teachersListWidget->count())
+		return;
+	if(i==teachersListWidget->count()-1)
+		return;
+		
+	QString s1=teachersListWidget->item(i)->text();
+	QString s2=teachersListWidget->item(i+1)->text();
+	
+	Teacher* at1=gt.rules.teachersList.at(i);
+	Teacher* at2=gt.rules.teachersList.at(i+1);
+	
+	gt.rules.internalStructureComputed=false;
+	setRulesModifiedAndOtherThings(&gt.rules);
+	
+	teachers_schedule_ready=false;
+	students_schedule_ready=false;
+	rooms_buildings_schedule_ready=false;
+
+	teachersListWidget->item(i)->setText(s2);
+	teachersListWidget->item(i+1)->setText(s1);
+	
+	gt.rules.teachersList[i]=at2;
+	gt.rules.teachersList[i+1]=at1;
+
+	gt.rules.addUndoPoint(tr("Moved the teacher %1 down.").arg(s1));
+
+	teachersListWidget->setCurrentRow(i+1);
+	teacherChanged(i+1);
+}
+
+void TeachersForm::sortTeachers()
+{
+	gt.rules.sortTeachersAlphabetically();
+
+	gt.rules.addUndoPoint(tr("Sorted the teachers."));
+
+	teachersListWidget->clear();
+	for(int i=0; i<gt.rules.teachersList.size(); i++){
+		Teacher* tch=gt.rules.teachersList[i];
+		teachersListWidget->addItem(tch->name);
+	}
+	
+	if(teachersListWidget->count()>0)
+		teachersListWidget->setCurrentRow(0);
+}
+
+void TeachersForm::teacherChanged(int index)
+{
+	if(index<0){
+		currentTeacherTextEdit->setText("");
+		return;
+	}
+	
+	Teacher* t=gt.rules.teachersList.at(index);
+	assert(t!=nullptr);
+	QString s1=t->getDetailedDescriptionWithConstraintsAndNumberOfActiveHours(gt.rules, activeHoursHash);
+	
+	QString s2;
+	if(gt.rules.mode==MORNINGS_AFTERNOONS){
+		QString mab;
+		if(t->morningsAfternoonsBehavior==TEACHER_UNRESTRICTED_MORNINGS_AFTERNOONS)
+			mab=tr("Unrestricted mornings/afternoons");
+		else if(t->morningsAfternoonsBehavior==TEACHER_MORNING_OR_EXCLUSIVELY_AFTERNOON)
+			mab=tr("Exclusive mornings/afternoons");
+		else if(t->morningsAfternoonsBehavior==TEACHER_ONE_DAY_EXCEPTION)
+			mab=tr("One day exception");
+		else if(t->morningsAfternoonsBehavior==TEACHER_TWO_DAYS_EXCEPTION)
+			mab=tr("Two days exception");
+		else if(t->morningsAfternoonsBehavior==TEACHER_THREE_DAYS_EXCEPTION)
+			mab=tr("Three days exception");
+		else if(t->morningsAfternoonsBehavior==TEACHER_FOUR_DAYS_EXCEPTION)
+			mab=tr("Four days exception");
+		else if(t->morningsAfternoonsBehavior==TEACHER_FIVE_DAYS_EXCEPTION)
+			mab=tr("Five days exception");
+		else
+			assert(0);
+		s2+=mab;
+		s2+="<br />\n";
+	}
+	QSet<ConstraintTeacherNotAvailableTimes*> cs=gt.rules.tnatHash.value(t->name, QSet<ConstraintTeacherNotAvailableTimes*>());
+	assert(cs.count()<=1);
+	ConstraintTeacherNotAvailableTimes* ctr=nullptr;
+	if(!cs.isEmpty())
+		ctr=*cs.constBegin();
+	if(ctr!=nullptr){
+		if(!ctr->active){
+			s2+=tr("Inactive time constraint of type 'teacher not available times':");
+			s2+="<br />\n";
+		}
+		s2+=listsOfDaysAndHoursToTable(gt.rules, ctr->days, ctr->hours, true, true, colorsCheckBox->isChecked());
+		s2+="<br />\n";
+	}
+	
+	currentTeacherTextEdit->setText(s2+protect4(s1));
+}
+
+void TeachersForm::activateTeacher()
+{
+	if(teachersListWidget->currentRow()<0){
+		QMessageBox::information(this, tr("FET information"), tr("Invalid selected teacher"));
+		return;
+	}
+
+	QString teacherName=teachersListWidget->currentItem()->text();
+	int count=gt.rules.activateTeacher(teacherName);
+	QMessageBox::information(this, tr("FET information"), tr("Activated a number of %1 activities").arg(count));
+
+	if(count>0)
+		gt.rules.addUndoPoint(tr("Activated the teacher %1 (%2 activities).", "%2 is the number of activated activities").arg(teacherName).arg(count));
+}
+
+void TeachersForm::deactivateTeacher()
+{
+	if(teachersListWidget->currentRow()<0){
+		QMessageBox::information(this, tr("FET information"), tr("Invalid selected teacher"));
+		return;
+	}
+
+	QString teacherName=teachersListWidget->currentItem()->text();
+	int count=gt.rules.deactivateTeacher(teacherName);
+	QMessageBox::information(this, tr("FET information"), tr("Deactivated a number of %1 activities").arg(count));
+
+	if(count>0)
+		gt.rules.addUndoPoint(tr("Deactivated teacher %1 (%2 activities).", "%2 is the number of deactivated activities").arg(teacherName).arg(count));
+}
+
+void TeachersForm::comments()
+{
+	int ind=teachersListWidget->currentRow();
+	if(ind<0){
+		QMessageBox::information(this, tr("FET information"), tr("Invalid selected teacher"));
+		return;
+	}
+	
+	Teacher* tch=gt.rules.teachersList[ind];
+	assert(tch!=nullptr);
+
+	QDialog getCommentsDialog(this);
+	
+	getCommentsDialog.setWindowTitle(tr("Teacher comments"));
+	
+	QPushButton* okPB=new QPushButton(tr("OK"));
+	okPB->setDefault(true);
+	QPushButton* cancelPB=new QPushButton(tr("Cancel"));
+	
+	connect(okPB, &QPushButton::clicked, &getCommentsDialog, &QDialog::accept);
+	connect(cancelPB, &QPushButton::clicked, &getCommentsDialog, &QDialog::reject);
+
+	QHBoxLayout* hl=new QHBoxLayout();
+	hl->addStretch();
+	hl->addWidget(okPB);
+	hl->addWidget(cancelPB);
+	
+	QVBoxLayout* vl=new QVBoxLayout();
+	
+	QTextEdit* commentsPT=new QTextEdit();
+	commentsPT->setPlainText(tch->comments);
+	commentsPT->selectAll();
+	commentsPT->setFocus();
+	
+	vl->addWidget(commentsPT);
+	vl->addLayout(hl);
+	
+	getCommentsDialog.setLayout(vl);
+	
+	const QString settingsName=QString("TeacherCommentsDialog");
+	
+	getCommentsDialog.resize(500, 320);
+	centerWidgetOnScreenAndOtherThings(&getCommentsDialog);
+	restoreFETDialogGeometry(&getCommentsDialog, settingsName);
+	
+	int t=getCommentsDialog.exec();
+	saveFETDialogGeometry(&getCommentsDialog, settingsName);
+	
+	if(t==QDialog::Accepted){
+		QString oc=tch->comments;
+
+		tch->comments=commentsPT->toPlainText();
+
+		gt.rules.addUndoPoint(tr("Changed the comments for the teacher %1 from\n%2\nto\n%3.").arg(tch->name).arg(oc).arg(tch->comments));
+
+		gt.rules.internalStructureComputed=false;
+		setRulesModifiedAndOtherThings(&gt.rules);
+
+		teacherChanged(ind);
+	}
+}
+
+void TeachersForm::longName()
+{
+	int ind=teachersListWidget->currentRow();
+	if(ind<0){
+		QMessageBox::information(this, tr("FET information"), tr("Invalid selected teacher"));
+		return;
+	}
+	
+	Teacher* tch=gt.rules.teachersList[ind];
+	assert(tch!=nullptr);
+
+	QDialog getLongNameDialog(this);
+	
+	getLongNameDialog.setWindowTitle(tr("Teacher long name"));
+	
+	QPushButton* okPB=new QPushButton(tr("OK"));
+	okPB->setDefault(true);
+	QPushButton* cancelPB=new QPushButton(tr("Cancel"));
+	
+	connect(okPB, &QPushButton::clicked, &getLongNameDialog, &QDialog::accept);
+	connect(cancelPB, &QPushButton::clicked, &getLongNameDialog, &QDialog::reject);
+
+	QHBoxLayout* hl=new QHBoxLayout();
+	hl->addStretch();
+	hl->addWidget(okPB);
+	hl->addWidget(cancelPB);
+	
+	QVBoxLayout* vl=new QVBoxLayout();
+	
+	QTextEdit* longNameTE=new QTextEdit();
+	longNameTE->setPlainText(tch->longName);
+	longNameTE->selectAll();
+	longNameTE->setFocus();
+	
+	vl->addWidget(longNameTE);
+	vl->addLayout(hl);
+	
+	getLongNameDialog.setLayout(vl);
+	
+	const QString settingsName=QString("TeacherLongNameDialog");
+	
+	getLongNameDialog.resize(300, 200);
+	centerWidgetOnScreenAndOtherThings(&getLongNameDialog);
+	restoreFETDialogGeometry(&getLongNameDialog, settingsName);
+	
+	int t=getLongNameDialog.exec();
+	saveFETDialogGeometry(&getLongNameDialog, settingsName);
+	
+	if(t==QDialog::Accepted){
+		QString oln=tch->longName;
+	
+		tch->longName=longNameTE->toPlainText();
+	
+		gt.rules.addUndoPoint(tr("Changed the long name for the teacher %1 from\n%2\nto\n%3.").arg(tch->name).arg(oln).arg(tch->longName));
+	
+		gt.rules.internalStructureComputed=false;
+		setRulesModifiedAndOtherThings(&gt.rules);
+
+		teacherChanged(ind);
+	}
+}
+
+void TeachersForm::code()
+{
+	int ind=teachersListWidget->currentRow();
+	if(ind<0){
+		QMessageBox::information(this, tr("FET information"), tr("Invalid selected teacher"));
+		return;
+	}
+	
+	Teacher* tch=gt.rules.teachersList[ind];
+	assert(tch!=nullptr);
+
+	QDialog getCodeDialog(this);
+	
+	getCodeDialog.setWindowTitle(tr("Teacher code"));
+	
+	QPushButton* okPB=new QPushButton(tr("OK"));
+	okPB->setDefault(true);
+	QPushButton* cancelPB=new QPushButton(tr("Cancel"));
+	
+	connect(okPB, &QPushButton::clicked, &getCodeDialog, &QDialog::accept);
+	connect(cancelPB, &QPushButton::clicked, &getCodeDialog, &QDialog::reject);
+
+	QHBoxLayout* hl=new QHBoxLayout();
+	hl->addStretch();
+	hl->addWidget(okPB);
+	hl->addWidget(cancelPB);
+	
+	QVBoxLayout* vl=new QVBoxLayout();
+	
+	QLineEdit* codeLE=new QLineEdit();
+	codeLE->setText(tch->code);
+	codeLE->selectAll();
+	codeLE->setFocus();
+	
+	vl->addWidget(codeLE);
+	vl->addLayout(hl);
+	
+	getCodeDialog.setLayout(vl);
+	
+	const QString settingsName=QString("TeacherCodeDialog");
+	
+	getCodeDialog.resize(300, 200);
+	centerWidgetOnScreenAndOtherThings(&getCodeDialog);
+	restoreFETDialogGeometry(&getCodeDialog, settingsName);
+	
+	int t=getCodeDialog.exec();
+	saveFETDialogGeometry(&getCodeDialog, settingsName);
+	
+	if(t==QDialog::Accepted){
+		QString oc=tch->code;
+	
+		tch->code=codeLE->text();
+	
+		gt.rules.addUndoPoint(tr("Changed the code for the teacher %1 from\n%2\nto\n%3.").arg(tch->name).arg(oc).arg(tch->code));
+	
+		gt.rules.internalStructureComputed=false;
+		setRulesModifiedAndOtherThings(&gt.rules);
+
+		teacherChanged(ind);
+	}
+}
+
+void TeachersForm::colorsCheckBoxToggled()
+{
+	if(teachersListWidget->count()>0)
+		if(teachersListWidget->currentRow()>=0 && teachersListWidget->currentRow()<teachersListWidget->count())
+			teacherChanged(teachersListWidget->currentRow());
+}

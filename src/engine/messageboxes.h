@@ -1,0 +1,180 @@
+//
+//
+// Description: This file is part of FET
+//
+//
+// Author: Liviu Lalescu (Please see https://lalescu.ro/liviu/ for details about contacting Liviu Lalescu (in particular, you can find there the email address))
+// Copyright (C) 2013 Liviu Lalescu <https://lalescu.ro/liviu/>
+//
+/***************************************************************************
+ *                                                                         *
+ *   This program is free software: you can redistribute it and/or modify  *
+ *   it under the terms of the GNU Affero General Public License as        *
+ *   published by the Free Software Foundation, version 3 of the License.  *
+ *                                                                         *
+ ***************************************************************************/
+
+#ifndef MESSAGEBOXES_H
+#define MESSAGEBOXES_H
+
+#include "timetable_defs.h"
+
+#include <QString>
+
+#include <QObject>
+
+class QWidget;
+
+class QProgressDialog;
+
+void commandLineMessage(QWidget* parent, const QString& title, const QString& message,
+ bool isWarning, bool isError);
+int commandLineMessage(QWidget* parent, const QString& title, const QString& message,
+ const QString& button0Text, const QString& button1Text, const QString& button2Text, int defaultButton, int escapeButton,
+ bool isWarning, bool isError);
+
+//Rules
+
+class RulesConstraintIgnored{
+public:
+	static int mediumConfirmation(QWidget* parent, const QString& title, const QString& message,
+	 const QString& button0Text, const QString& button1Text, const QString& button2Text,
+	 int defaultButton, int escapeButton);
+};
+
+class RulesImpossible{
+public:
+	static void warning(QWidget* parent, const QString& title, const QString& message);
+};
+
+class RulesReconcilableMessage{
+public:
+	static void warning(QWidget* parent, const QString& title, const QString& message);
+
+	static int warning(QWidget* parent, const QString& title, const QString& message,
+	 const QString& button0Text, const QString& button1Text, const QString& button2Text,
+	 int defaultButton, int escapeButton);
+
+	static int mediumConfirmation(QWidget* parent, const QString& title, const QString& message,
+	 const QString& button0Text, const QString& button1Text, const QString& button2Text,
+	 int defaultButton, int escapeButton);
+
+	static void information(QWidget* parent, const QString& title, const QString& message);
+
+	static int information(QWidget* parent, const QString& title, const QString& message,
+	 const QString& button0Text, const QString& button1Text, const QString& button2Text,
+	 int defaultButton, int escapeButton);
+};
+
+class RulesIrreconcilableMessage{
+public:
+	static void warning(QWidget* parent, const QString& title, const QString& message);
+
+/*	static int warning(QWidget* parent, const QString& title, const QString& message,
+	 const QString& button0Text, const QString& button1Text, const QString& button2Text,
+	 int defaultButton, int escapeButton);*/
+};
+
+class RulesUsualInformation{
+public:
+	static void information(QWidget* parent, const QString& title, const QString& message);
+};
+
+class RulesReadingWrongConstraint{
+public:
+	static void warning(QWidget* parent, const QString& title, const QString& message);
+};
+
+class IrreconcilableCriticalMessage{
+public:
+	static void critical(QWidget* parent, const QString& title, const QString& message);
+};
+
+//GeneratePre
+
+class GeneratePreReconcilableMessage{
+public:
+	static int mediumConfirmation(QWidget* parent, const QString& title, const QString& message,
+	 const QString& button0Text, const QString& button1Text, const QString& button2Text,
+	 int defaultButton, int escapeButton);
+
+	static int largeConfirmation(QWidget* parent, const QString& title, const QString& message,
+	 const QString& button0Text, const QString& button1Text, const QString& button2Text,
+	 int defaultButton, int escapeButton);
+
+	static void largeInformation(QWidget* parent, const QString& title, const QString& message);
+};
+
+class GeneratePreIrreconcilableMessage{
+public:
+	static void information(QWidget* parent, const QString& title, const QString& message);
+
+	static int information(QWidget* parent, const QString& title, const QString& message,
+	 const QString& button0Text, const QString& button1Text, const QString& button2Text,
+	 int defaultButton, int escapeButton);
+
+	static void mediumInformation(QWidget* parent, const QString& title, const QString& message);
+
+	static int mediumConfirmation(QWidget* parent, const QString& title, const QString& message,
+	 const QString& button0Text, const QString& button1Text, const QString& button2Text,
+	 int defaultButton, int escapeButton);
+};
+
+//TimetableExport
+
+class TimetableExportMessage{
+public:
+	static int information(QWidget* parent, const QString& title, const QString& message,
+	 const QString& button0Text, const QString& button1Text, const QString& button2Text,
+	 int defaultButton, int escapeButton);
+
+	static int warning(QWidget* parent, const QString& title, const QString& message,
+	 const QString& button0Text, const QString& button1Text, const QString& button2Text,
+	 int defaultButton, int escapeButton);
+
+	static void information(QWidget* parent, const QString& title, const QString& message);
+
+	static void warning(QWidget* parent, const QString& title, const QString& message);
+};
+
+//TimeConstraint
+
+class TimeConstraintIrreconcilableMessage{
+public:
+	static void information(QWidget* parent, const QString& title, const QString& message);
+	static void warning(QWidget* parent, const QString& title, const QString& message);
+};
+
+//SpaceConstraint
+
+class SpaceConstraintIrreconcilableMessage{
+public:
+	static void information(QWidget* parent, const QString& title, const QString& message);
+	static void warning(QWidget* parent, const QString& title, const QString& message);
+};
+
+//Fet
+
+class FetMessage{
+public:
+	static void information(QWidget* parent, const QString& title, const QString& message);
+	static void warning(QWidget* parent, const QString& title, const QString& message);
+};
+
+//QProgressDialog
+
+class EngineProgressDialog{
+	QProgressDialog* qpd;
+
+public:
+	EngineProgressDialog(QWidget* parent);
+	~EngineProgressDialog();
+	void setWindowTitle(const QString& title);
+	void setLabelText(const QString& title);
+	void setRange(int a, int b);
+	void setModal(bool m);
+	void setValue(int v);
+	bool wasCanceled();
+};
+
+#endif

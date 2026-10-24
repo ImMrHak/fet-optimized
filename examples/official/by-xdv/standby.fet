@@ -1,0 +1,1818 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<fet version="7.10.3">
+  <Mode>Official</Mode>
+  <Institution_Name>stand-by
+</Institution_Name>
+  <Comments>εφημερίες καθηγητών</Comments>
+  <Days_List>
+    <Number_of_Days>10</Number_of_Days>
+    <Day>
+      <Name>monday morning</Name>
+      <Long_Name>
+Δευτέρα 1η βάρδια</Long_Name>
+    </Day>
+    <Day>
+      <Name>Monday afternoon</Name>
+      <Long_Name>Δευτέρα 2η βάρδια		</Long_Name>
+    </Day>
+    <Day>
+      <Name>Tuesday morning</Name>
+      <Long_Name></Long_Name>
+    </Day>
+    <Day>
+      <Name>Tuesday afternoon</Name>
+      <Long_Name></Long_Name>
+    </Day>
+    <Day>
+      <Name>Wednesday morning</Name>
+      <Long_Name>
+</Long_Name>
+    </Day>
+    <Day>
+      <Name>Wednesday afternoon</Name>
+      <Long_Name></Long_Name>
+    </Day>
+    <Day>
+      <Name>Thursday morning</Name>
+      <Long_Name>Ημέρα 7</Long_Name>
+    </Day>
+    <Day>
+      <Name>Thursday afternoon</Name>
+      <Long_Name>Ημέρα 8</Long_Name>
+    </Day>
+    <Day>
+      <Name>Friday morning</Name>
+      <Long_Name>Ημέρα 9</Long_Name>
+    </Day>
+    <Day>
+      <Name>Friday afternoon</Name>
+      <Long_Name>Ημέρα 10</Long_Name>
+    </Day>
+  </Days_List>
+  <Hours_List>
+    <Number_of_Hours>4</Number_of_Hours>
+    <Hour>
+      <Name>place 1</Name>
+      <Long_Name></Long_Name>
+    </Hour>
+    <Hour>
+      <Name>place 2</Name>
+      <Long_Name></Long_Name>
+    </Hour>
+    <Hour>
+      <Name>place 3</Name>
+      <Long_Name></Long_Name>
+    </Hour>
+    <Hour>
+      <Name>Reserve</Name>
+      <Long_Name></Long_Name>
+    </Hour>
+  </Hours_List>
+  <Subjects_List>
+    <Subject>
+      <Name>__e__</Name>
+      <Long_Name></Long_Name>
+      <Code></Code>
+      <Comments></Comments>
+    </Subject>
+    <Subject>
+      <Name>___R___</Name>
+      <Long_Name></Long_Name>
+      <Code></Code>
+      <Comments></Comments>
+    </Subject>
+  </Subjects_List>
+  <Activity_Tags_List>
+  </Activity_Tags_List>
+  <Teachers_List>
+    <Teacher>
+      <Name>morfo</Name>
+      <Long_Name></Long_Name>
+      <Code></Code>
+      <Target_Number_of_Hours>0</Target_Number_of_Hours>
+      <Qualified_Subjects>
+      </Qualified_Subjects>
+      <Comments></Comments>
+    </Teacher>
+    <Teacher>
+      <Name>erasmus</Name>
+      <Long_Name></Long_Name>
+      <Code></Code>
+      <Target_Number_of_Hours>0</Target_Number_of_Hours>
+      <Qualified_Subjects>
+      </Qualified_Subjects>
+      <Comments></Comments>
+    </Teacher>
+    <Teacher>
+      <Name>mary</Name>
+      <Long_Name></Long_Name>
+      <Code></Code>
+      <Target_Number_of_Hours>0</Target_Number_of_Hours>
+      <Qualified_Subjects>
+      </Qualified_Subjects>
+      <Comments></Comments>
+    </Teacher>
+    <Teacher>
+      <Name>margaret</Name>
+      <Long_Name></Long_Name>
+      <Code></Code>
+      <Target_Number_of_Hours>0</Target_Number_of_Hours>
+      <Qualified_Subjects>
+      </Qualified_Subjects>
+      <Comments></Comments>
+    </Teacher>
+    <Teacher>
+      <Name>morfi</Name>
+      <Long_Name></Long_Name>
+      <Code></Code>
+      <Target_Number_of_Hours>0</Target_Number_of_Hours>
+      <Qualified_Subjects>
+      </Qualified_Subjects>
+      <Comments></Comments>
+    </Teacher>
+    <Teacher>
+      <Name>konstantina</Name>
+      <Long_Name></Long_Name>
+      <Code></Code>
+      <Target_Number_of_Hours>0</Target_Number_of_Hours>
+      <Qualified_Subjects>
+      </Qualified_Subjects>
+      <Comments></Comments>
+    </Teacher>
+    <Teacher>
+      <Name>unesco</Name>
+      <Long_Name></Long_Name>
+      <Code></Code>
+      <Target_Number_of_Hours>0</Target_Number_of_Hours>
+      <Qualified_Subjects>
+      </Qualified_Subjects>
+      <Comments></Comments>
+    </Teacher>
+    <Teacher>
+      <Name>mina</Name>
+      <Long_Name></Long_Name>
+      <Code></Code>
+      <Target_Number_of_Hours>0</Target_Number_of_Hours>
+      <Qualified_Subjects>
+      </Qualified_Subjects>
+      <Comments></Comments>
+    </Teacher>
+    <Teacher>
+      <Name>xdv</Name>
+      <Long_Name></Long_Name>
+      <Code></Code>
+      <Target_Number_of_Hours>0</Target_Number_of_Hours>
+      <Qualified_Subjects>
+      </Qualified_Subjects>
+      <Comments></Comments>
+    </Teacher>
+    <Teacher>
+      <Name>aris</Name>
+      <Long_Name></Long_Name>
+      <Code></Code>
+      <Target_Number_of_Hours>0</Target_Number_of_Hours>
+      <Qualified_Subjects>
+      </Qualified_Subjects>
+      <Comments></Comments>
+    </Teacher>
+    <Teacher>
+      <Name>nantia</Name>
+      <Long_Name></Long_Name>
+      <Code></Code>
+      <Target_Number_of_Hours>0</Target_Number_of_Hours>
+      <Qualified_Subjects>
+      </Qualified_Subjects>
+      <Comments></Comments>
+    </Teacher>
+    <Teacher>
+      <Name>telemachus</Name>
+      <Long_Name></Long_Name>
+      <Code></Code>
+      <Target_Number_of_Hours>0</Target_Number_of_Hours>
+      <Qualified_Subjects>
+      </Qualified_Subjects>
+      <Comments></Comments>
+    </Teacher>
+  </Teachers_List>
+  <Students_List>
+    <Year>
+      <Name>stud</Name>
+      <Long_Name></Long_Name>
+      <Code></Code>
+      <Number_of_Students>27</Number_of_Students>
+      <Comments></Comments>
+      <!-- The information regarding categories, divisions of each category, and separator is only used in the divide year automatically by categories dialog. -->
+      <Number_of_Categories>0</Number_of_Categories>
+      <First_Category_Is_Permanent>false</First_Category_Is_Permanent>
+      <Separator> </Separator>
+    </Year>
+  </Students_List>
+  <Activities_List>
+    <Activity>
+      <Teacher>aris</Teacher>
+      <Subject>__e__</Subject>
+      <Students>stud</Students>
+      <Duration>1</Duration>
+      <Total_Duration>1</Total_Duration>
+      <Id>162</Id>
+      <Activity_Group_Id>0</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>morfo</Teacher>
+      <Subject>__e__</Subject>
+      <Students>stud</Students>
+      <Duration>1</Duration>
+      <Total_Duration>5</Total_Duration>
+      <Id>163</Id>
+      <Activity_Group_Id>163</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>morfo</Teacher>
+      <Subject>__e__</Subject>
+      <Students>stud</Students>
+      <Duration>1</Duration>
+      <Total_Duration>5</Total_Duration>
+      <Id>164</Id>
+      <Activity_Group_Id>163</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>morfo</Teacher>
+      <Subject>__e__</Subject>
+      <Students>stud</Students>
+      <Duration>1</Duration>
+      <Total_Duration>5</Total_Duration>
+      <Id>165</Id>
+      <Activity_Group_Id>163</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>morfo</Teacher>
+      <Subject>__e__</Subject>
+      <Students>stud</Students>
+      <Duration>1</Duration>
+      <Total_Duration>5</Total_Duration>
+      <Id>166</Id>
+      <Activity_Group_Id>163</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>morfo</Teacher>
+      <Subject>__e__</Subject>
+      <Students>stud</Students>
+      <Duration>1</Duration>
+      <Total_Duration>5</Total_Duration>
+      <Id>167</Id>
+      <Activity_Group_Id>163</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>erasmus</Teacher>
+      <Subject>__e__</Subject>
+      <Students>stud</Students>
+      <Duration>1</Duration>
+      <Total_Duration>5</Total_Duration>
+      <Id>168</Id>
+      <Activity_Group_Id>168</Activity_Group_Id>
+      <Active>false</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>erasmus</Teacher>
+      <Subject>__e__</Subject>
+      <Students>stud</Students>
+      <Duration>1</Duration>
+      <Total_Duration>5</Total_Duration>
+      <Id>169</Id>
+      <Activity_Group_Id>168</Activity_Group_Id>
+      <Active>false</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>erasmus</Teacher>
+      <Subject>__e__</Subject>
+      <Students>stud</Students>
+      <Duration>1</Duration>
+      <Total_Duration>5</Total_Duration>
+      <Id>170</Id>
+      <Activity_Group_Id>168</Activity_Group_Id>
+      <Active>false</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>erasmus</Teacher>
+      <Subject>__e__</Subject>
+      <Students>stud</Students>
+      <Duration>1</Duration>
+      <Total_Duration>5</Total_Duration>
+      <Id>171</Id>
+      <Activity_Group_Id>168</Activity_Group_Id>
+      <Active>false</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>erasmus</Teacher>
+      <Subject>__e__</Subject>
+      <Students>stud</Students>
+      <Duration>1</Duration>
+      <Total_Duration>5</Total_Duration>
+      <Id>172</Id>
+      <Activity_Group_Id>168</Activity_Group_Id>
+      <Active>false</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>mary</Teacher>
+      <Subject>__e__</Subject>
+      <Students>stud</Students>
+      <Duration>1</Duration>
+      <Total_Duration>5</Total_Duration>
+      <Id>173</Id>
+      <Activity_Group_Id>173</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>mary</Teacher>
+      <Subject>__e__</Subject>
+      <Students>stud</Students>
+      <Duration>1</Duration>
+      <Total_Duration>5</Total_Duration>
+      <Id>174</Id>
+      <Activity_Group_Id>173</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>mary</Teacher>
+      <Subject>__e__</Subject>
+      <Students>stud</Students>
+      <Duration>1</Duration>
+      <Total_Duration>5</Total_Duration>
+      <Id>175</Id>
+      <Activity_Group_Id>173</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>mary</Teacher>
+      <Subject>__e__</Subject>
+      <Students>stud</Students>
+      <Duration>1</Duration>
+      <Total_Duration>5</Total_Duration>
+      <Id>176</Id>
+      <Activity_Group_Id>173</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>mary</Teacher>
+      <Subject>__e__</Subject>
+      <Students>stud</Students>
+      <Duration>1</Duration>
+      <Total_Duration>5</Total_Duration>
+      <Id>177</Id>
+      <Activity_Group_Id>173</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>margaret</Teacher>
+      <Subject>__e__</Subject>
+      <Students>stud</Students>
+      <Duration>1</Duration>
+      <Total_Duration>5</Total_Duration>
+      <Id>178</Id>
+      <Activity_Group_Id>178</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>margaret</Teacher>
+      <Subject>__e__</Subject>
+      <Students>stud</Students>
+      <Duration>1</Duration>
+      <Total_Duration>5</Total_Duration>
+      <Id>179</Id>
+      <Activity_Group_Id>178</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>margaret</Teacher>
+      <Subject>__e__</Subject>
+      <Students>stud</Students>
+      <Duration>1</Duration>
+      <Total_Duration>5</Total_Duration>
+      <Id>180</Id>
+      <Activity_Group_Id>178</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>margaret</Teacher>
+      <Subject>__e__</Subject>
+      <Students>stud</Students>
+      <Duration>1</Duration>
+      <Total_Duration>5</Total_Duration>
+      <Id>181</Id>
+      <Activity_Group_Id>178</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>margaret</Teacher>
+      <Subject>__e__</Subject>
+      <Students>stud</Students>
+      <Duration>1</Duration>
+      <Total_Duration>5</Total_Duration>
+      <Id>182</Id>
+      <Activity_Group_Id>178</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>morfi</Teacher>
+      <Subject>___R___</Subject>
+      <Students>stud</Students>
+      <Duration>1</Duration>
+      <Total_Duration>5</Total_Duration>
+      <Id>183</Id>
+      <Activity_Group_Id>183</Activity_Group_Id>
+      <Active>false</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>morfi</Teacher>
+      <Subject>___R___</Subject>
+      <Students>stud</Students>
+      <Duration>1</Duration>
+      <Total_Duration>5</Total_Duration>
+      <Id>184</Id>
+      <Activity_Group_Id>183</Activity_Group_Id>
+      <Active>false</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>morfi</Teacher>
+      <Subject>___R___</Subject>
+      <Students>stud</Students>
+      <Duration>1</Duration>
+      <Total_Duration>5</Total_Duration>
+      <Id>185</Id>
+      <Activity_Group_Id>183</Activity_Group_Id>
+      <Active>false</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>morfi</Teacher>
+      <Subject>___R___</Subject>
+      <Students>stud</Students>
+      <Duration>1</Duration>
+      <Total_Duration>5</Total_Duration>
+      <Id>186</Id>
+      <Activity_Group_Id>183</Activity_Group_Id>
+      <Active>false</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>morfi</Teacher>
+      <Subject>___R___</Subject>
+      <Students>stud</Students>
+      <Duration>1</Duration>
+      <Total_Duration>5</Total_Duration>
+      <Id>187</Id>
+      <Activity_Group_Id>183</Activity_Group_Id>
+      <Active>false</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>konstantina</Teacher>
+      <Subject>___R___</Subject>
+      <Students>stud</Students>
+      <Duration>1</Duration>
+      <Total_Duration>5</Total_Duration>
+      <Id>188</Id>
+      <Activity_Group_Id>188</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>konstantina</Teacher>
+      <Subject>___R___</Subject>
+      <Students>stud</Students>
+      <Duration>1</Duration>
+      <Total_Duration>5</Total_Duration>
+      <Id>189</Id>
+      <Activity_Group_Id>188</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>konstantina</Teacher>
+      <Subject>___R___</Subject>
+      <Students>stud</Students>
+      <Duration>1</Duration>
+      <Total_Duration>5</Total_Duration>
+      <Id>190</Id>
+      <Activity_Group_Id>188</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>konstantina</Teacher>
+      <Subject>___R___</Subject>
+      <Students>stud</Students>
+      <Duration>1</Duration>
+      <Total_Duration>5</Total_Duration>
+      <Id>191</Id>
+      <Activity_Group_Id>188</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>konstantina</Teacher>
+      <Subject>___R___</Subject>
+      <Students>stud</Students>
+      <Duration>1</Duration>
+      <Total_Duration>5</Total_Duration>
+      <Id>192</Id>
+      <Activity_Group_Id>188</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>xdv</Teacher>
+      <Subject>__e__</Subject>
+      <Students>stud</Students>
+      <Duration>1</Duration>
+      <Total_Duration>5</Total_Duration>
+      <Id>193</Id>
+      <Activity_Group_Id>193</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>xdv</Teacher>
+      <Subject>__e__</Subject>
+      <Students>stud</Students>
+      <Duration>1</Duration>
+      <Total_Duration>5</Total_Duration>
+      <Id>194</Id>
+      <Activity_Group_Id>193</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>xdv</Teacher>
+      <Subject>__e__</Subject>
+      <Students>stud</Students>
+      <Duration>1</Duration>
+      <Total_Duration>5</Total_Duration>
+      <Id>195</Id>
+      <Activity_Group_Id>193</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>xdv</Teacher>
+      <Subject>__e__</Subject>
+      <Students>stud</Students>
+      <Duration>1</Duration>
+      <Total_Duration>5</Total_Duration>
+      <Id>196</Id>
+      <Activity_Group_Id>193</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>xdv</Teacher>
+      <Subject>__e__</Subject>
+      <Students>stud</Students>
+      <Duration>1</Duration>
+      <Total_Duration>5</Total_Duration>
+      <Id>197</Id>
+      <Activity_Group_Id>193</Activity_Group_Id>
+      <Active>false</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>nantia</Teacher>
+      <Subject>__e__</Subject>
+      <Students>stud</Students>
+      <Duration>1</Duration>
+      <Total_Duration>5</Total_Duration>
+      <Id>198</Id>
+      <Activity_Group_Id>198</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>nantia</Teacher>
+      <Subject>__e__</Subject>
+      <Students>stud</Students>
+      <Duration>1</Duration>
+      <Total_Duration>5</Total_Duration>
+      <Id>199</Id>
+      <Activity_Group_Id>198</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>nantia</Teacher>
+      <Subject>__e__</Subject>
+      <Students>stud</Students>
+      <Duration>1</Duration>
+      <Total_Duration>5</Total_Duration>
+      <Id>200</Id>
+      <Activity_Group_Id>198</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>nantia</Teacher>
+      <Subject>__e__</Subject>
+      <Students>stud</Students>
+      <Duration>1</Duration>
+      <Total_Duration>5</Total_Duration>
+      <Id>201</Id>
+      <Activity_Group_Id>198</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>nantia</Teacher>
+      <Subject>__e__</Subject>
+      <Students>stud</Students>
+      <Duration>1</Duration>
+      <Total_Duration>5</Total_Duration>
+      <Id>202</Id>
+      <Activity_Group_Id>198</Activity_Group_Id>
+      <Active>false</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>telemachus</Teacher>
+      <Subject>__e__</Subject>
+      <Students>stud</Students>
+      <Duration>1</Duration>
+      <Total_Duration>5</Total_Duration>
+      <Id>203</Id>
+      <Activity_Group_Id>203</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>telemachus</Teacher>
+      <Subject>__e__</Subject>
+      <Students>stud</Students>
+      <Duration>1</Duration>
+      <Total_Duration>5</Total_Duration>
+      <Id>204</Id>
+      <Activity_Group_Id>203</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>telemachus</Teacher>
+      <Subject>__e__</Subject>
+      <Students>stud</Students>
+      <Duration>1</Duration>
+      <Total_Duration>5</Total_Duration>
+      <Id>205</Id>
+      <Activity_Group_Id>203</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>telemachus</Teacher>
+      <Subject>__e__</Subject>
+      <Students>stud</Students>
+      <Duration>1</Duration>
+      <Total_Duration>5</Total_Duration>
+      <Id>206</Id>
+      <Activity_Group_Id>203</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>telemachus</Teacher>
+      <Subject>__e__</Subject>
+      <Students>stud</Students>
+      <Duration>1</Duration>
+      <Total_Duration>5</Total_Duration>
+      <Id>207</Id>
+      <Activity_Group_Id>203</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>unesco</Teacher>
+      <Subject>__e__</Subject>
+      <Students>stud</Students>
+      <Duration>1</Duration>
+      <Total_Duration>4</Total_Duration>
+      <Id>208</Id>
+      <Activity_Group_Id>208</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>unesco</Teacher>
+      <Subject>__e__</Subject>
+      <Students>stud</Students>
+      <Duration>1</Duration>
+      <Total_Duration>4</Total_Duration>
+      <Id>209</Id>
+      <Activity_Group_Id>208</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>unesco</Teacher>
+      <Subject>__e__</Subject>
+      <Students>stud</Students>
+      <Duration>1</Duration>
+      <Total_Duration>4</Total_Duration>
+      <Id>210</Id>
+      <Activity_Group_Id>208</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>unesco</Teacher>
+      <Subject>__e__</Subject>
+      <Students>stud</Students>
+      <Duration>1</Duration>
+      <Total_Duration>4</Total_Duration>
+      <Id>211</Id>
+      <Activity_Group_Id>208</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>mina</Teacher>
+      <Subject>__e__</Subject>
+      <Students>stud</Students>
+      <Duration>1</Duration>
+      <Total_Duration>3</Total_Duration>
+      <Id>212</Id>
+      <Activity_Group_Id>212</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>mina</Teacher>
+      <Subject>__e__</Subject>
+      <Students>stud</Students>
+      <Duration>1</Duration>
+      <Total_Duration>3</Total_Duration>
+      <Id>213</Id>
+      <Activity_Group_Id>212</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>mina</Teacher>
+      <Subject>__e__</Subject>
+      <Students>stud</Students>
+      <Duration>1</Duration>
+      <Total_Duration>3</Total_Duration>
+      <Id>214</Id>
+      <Activity_Group_Id>212</Activity_Group_Id>
+      <Active>false</Active>
+      <Comments></Comments>
+    </Activity>
+  </Activities_List>
+  <Buildings_List>
+  </Buildings_List>
+  <Rooms_List>
+    <Room>
+      <Name>ΑΥΛΗ1</Name>
+      <Long_Name></Long_Name>
+      <Code></Code>
+      <Building></Building>
+      <Capacity>30000</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>ΑΥΛΗ2</Name>
+      <Long_Name></Long_Name>
+      <Code></Code>
+      <Building></Building>
+      <Capacity>30000</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>ΙΣΟΓΕΙΟ-ΟΡΟΦΟΣ</Name>
+      <Long_Name></Long_Name>
+      <Code></Code>
+      <Building></Building>
+      <Capacity>30000</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>ΕΦΕΔΡΙΚΟΣ</Name>
+      <Long_Name></Long_Name>
+      <Code></Code>
+      <Building></Building>
+      <Capacity>30000</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+  </Rooms_List>
+  <Time_Constraints_List>
+    <ConstraintBasicCompulsoryTime>
+      <Weight_Percentage>100</Weight_Percentage>
+      <Active>true</Active>
+      <Comments></Comments>
+    </ConstraintBasicCompulsoryTime>
+    <ConstraintTeacherNotAvailableTimes>
+      <Weight_Percentage>100</Weight_Percentage>
+      <Teacher>xdv</Teacher>
+      <Number_of_Not_Available_Times>12</Number_of_Not_Available_Times>
+      <Not_Available_Time>
+        <Day>Wednesday morning</Day>
+        <Hour>place 1</Hour>
+      </Not_Available_Time>
+      <Not_Available_Time>
+        <Day>Wednesday morning</Day>
+        <Hour>place 2</Hour>
+      </Not_Available_Time>
+      <Not_Available_Time>
+        <Day>Wednesday morning</Day>
+        <Hour>place 3</Hour>
+      </Not_Available_Time>
+      <Not_Available_Time>
+        <Day>Wednesday morning</Day>
+        <Hour>Reserve</Hour>
+      </Not_Available_Time>
+      <Not_Available_Time>
+        <Day>Wednesday afternoon</Day>
+        <Hour>place 1</Hour>
+      </Not_Available_Time>
+      <Not_Available_Time>
+        <Day>Wednesday afternoon</Day>
+        <Hour>place 2</Hour>
+      </Not_Available_Time>
+      <Not_Available_Time>
+        <Day>Wednesday afternoon</Day>
+        <Hour>place 3</Hour>
+      </Not_Available_Time>
+      <Not_Available_Time>
+        <Day>Wednesday afternoon</Day>
+        <Hour>Reserve</Hour>
+      </Not_Available_Time>
+      <Not_Available_Time>
+        <Day>Thursday morning</Day>
+        <Hour>place 1</Hour>
+      </Not_Available_Time>
+      <Not_Available_Time>
+        <Day>Thursday morning</Day>
+        <Hour>place 2</Hour>
+      </Not_Available_Time>
+      <Not_Available_Time>
+        <Day>Thursday morning</Day>
+        <Hour>place 3</Hour>
+      </Not_Available_Time>
+      <Not_Available_Time>
+        <Day>Thursday morning</Day>
+        <Hour>Reserve</Hour>
+      </Not_Available_Time>
+      <Active>true</Active>
+      <Comments></Comments>
+    </ConstraintTeacherNotAvailableTimes>
+    <ConstraintMinDaysBetweenActivities>
+      <Weight_Percentage>95</Weight_Percentage>
+      <Consecutive_If_Same_Day>true</Consecutive_If_Same_Day>
+      <Number_of_Activities>5</Number_of_Activities>
+      <Activity_Id>163</Activity_Id>
+      <Activity_Id>164</Activity_Id>
+      <Activity_Id>165</Activity_Id>
+      <Activity_Id>166</Activity_Id>
+      <Activity_Id>167</Activity_Id>
+      <MinDays>1</MinDays>
+      <Active>true</Active>
+      <Comments></Comments>
+    </ConstraintMinDaysBetweenActivities>
+    <ConstraintMinDaysBetweenActivities>
+      <Weight_Percentage>95</Weight_Percentage>
+      <Consecutive_If_Same_Day>true</Consecutive_If_Same_Day>
+      <Number_of_Activities>5</Number_of_Activities>
+      <Activity_Id>168</Activity_Id>
+      <Activity_Id>169</Activity_Id>
+      <Activity_Id>170</Activity_Id>
+      <Activity_Id>171</Activity_Id>
+      <Activity_Id>172</Activity_Id>
+      <MinDays>1</MinDays>
+      <Active>true</Active>
+      <Comments></Comments>
+    </ConstraintMinDaysBetweenActivities>
+    <ConstraintMinDaysBetweenActivities>
+      <Weight_Percentage>95</Weight_Percentage>
+      <Consecutive_If_Same_Day>true</Consecutive_If_Same_Day>
+      <Number_of_Activities>5</Number_of_Activities>
+      <Activity_Id>173</Activity_Id>
+      <Activity_Id>174</Activity_Id>
+      <Activity_Id>175</Activity_Id>
+      <Activity_Id>176</Activity_Id>
+      <Activity_Id>177</Activity_Id>
+      <MinDays>1</MinDays>
+      <Active>true</Active>
+      <Comments></Comments>
+    </ConstraintMinDaysBetweenActivities>
+    <ConstraintMinDaysBetweenActivities>
+      <Weight_Percentage>95</Weight_Percentage>
+      <Consecutive_If_Same_Day>true</Consecutive_If_Same_Day>
+      <Number_of_Activities>5</Number_of_Activities>
+      <Activity_Id>178</Activity_Id>
+      <Activity_Id>179</Activity_Id>
+      <Activity_Id>180</Activity_Id>
+      <Activity_Id>181</Activity_Id>
+      <Activity_Id>182</Activity_Id>
+      <MinDays>1</MinDays>
+      <Active>true</Active>
+      <Comments></Comments>
+    </ConstraintMinDaysBetweenActivities>
+    <ConstraintMinDaysBetweenActivities>
+      <Weight_Percentage>95</Weight_Percentage>
+      <Consecutive_If_Same_Day>true</Consecutive_If_Same_Day>
+      <Number_of_Activities>5</Number_of_Activities>
+      <Activity_Id>183</Activity_Id>
+      <Activity_Id>184</Activity_Id>
+      <Activity_Id>185</Activity_Id>
+      <Activity_Id>186</Activity_Id>
+      <Activity_Id>187</Activity_Id>
+      <MinDays>1</MinDays>
+      <Active>true</Active>
+      <Comments></Comments>
+    </ConstraintMinDaysBetweenActivities>
+    <ConstraintMinDaysBetweenActivities>
+      <Weight_Percentage>95</Weight_Percentage>
+      <Consecutive_If_Same_Day>true</Consecutive_If_Same_Day>
+      <Number_of_Activities>5</Number_of_Activities>
+      <Activity_Id>188</Activity_Id>
+      <Activity_Id>189</Activity_Id>
+      <Activity_Id>190</Activity_Id>
+      <Activity_Id>191</Activity_Id>
+      <Activity_Id>192</Activity_Id>
+      <MinDays>1</MinDays>
+      <Active>true</Active>
+      <Comments></Comments>
+    </ConstraintMinDaysBetweenActivities>
+    <ConstraintMinDaysBetweenActivities>
+      <Weight_Percentage>95</Weight_Percentage>
+      <Consecutive_If_Same_Day>true</Consecutive_If_Same_Day>
+      <Number_of_Activities>5</Number_of_Activities>
+      <Activity_Id>193</Activity_Id>
+      <Activity_Id>194</Activity_Id>
+      <Activity_Id>195</Activity_Id>
+      <Activity_Id>196</Activity_Id>
+      <Activity_Id>197</Activity_Id>
+      <MinDays>1</MinDays>
+      <Active>true</Active>
+      <Comments></Comments>
+    </ConstraintMinDaysBetweenActivities>
+    <ConstraintMinDaysBetweenActivities>
+      <Weight_Percentage>95</Weight_Percentage>
+      <Consecutive_If_Same_Day>true</Consecutive_If_Same_Day>
+      <Number_of_Activities>5</Number_of_Activities>
+      <Activity_Id>198</Activity_Id>
+      <Activity_Id>199</Activity_Id>
+      <Activity_Id>200</Activity_Id>
+      <Activity_Id>201</Activity_Id>
+      <Activity_Id>202</Activity_Id>
+      <MinDays>1</MinDays>
+      <Active>true</Active>
+      <Comments></Comments>
+    </ConstraintMinDaysBetweenActivities>
+    <ConstraintMinDaysBetweenActivities>
+      <Weight_Percentage>95</Weight_Percentage>
+      <Consecutive_If_Same_Day>true</Consecutive_If_Same_Day>
+      <Number_of_Activities>5</Number_of_Activities>
+      <Activity_Id>203</Activity_Id>
+      <Activity_Id>204</Activity_Id>
+      <Activity_Id>205</Activity_Id>
+      <Activity_Id>206</Activity_Id>
+      <Activity_Id>207</Activity_Id>
+      <MinDays>1</MinDays>
+      <Active>true</Active>
+      <Comments></Comments>
+    </ConstraintMinDaysBetweenActivities>
+    <ConstraintMinDaysBetweenActivities>
+      <Weight_Percentage>95</Weight_Percentage>
+      <Consecutive_If_Same_Day>true</Consecutive_If_Same_Day>
+      <Number_of_Activities>4</Number_of_Activities>
+      <Activity_Id>208</Activity_Id>
+      <Activity_Id>209</Activity_Id>
+      <Activity_Id>210</Activity_Id>
+      <Activity_Id>211</Activity_Id>
+      <MinDays>1</MinDays>
+      <Active>true</Active>
+      <Comments></Comments>
+    </ConstraintMinDaysBetweenActivities>
+    <ConstraintMinDaysBetweenActivities>
+      <Weight_Percentage>95</Weight_Percentage>
+      <Consecutive_If_Same_Day>true</Consecutive_If_Same_Day>
+      <Number_of_Activities>3</Number_of_Activities>
+      <Activity_Id>212</Activity_Id>
+      <Activity_Id>213</Activity_Id>
+      <Activity_Id>214</Activity_Id>
+      <MinDays>1</MinDays>
+      <Active>true</Active>
+      <Comments></Comments>
+    </ConstraintMinDaysBetweenActivities>
+    <ConstraintActivitiesOccupyMinTimeSlotsFromSelection>
+      <Weight_Percentage>100</Weight_Percentage>
+      <Number_of_Activities>5</Number_of_Activities>
+      <Activity_Id>163</Activity_Id>
+      <Activity_Id>164</Activity_Id>
+      <Activity_Id>165</Activity_Id>
+      <Activity_Id>166</Activity_Id>
+      <Activity_Id>167</Activity_Id>
+      <Number_of_Selected_Time_Slots>20</Number_of_Selected_Time_Slots>
+      <Selected_Time_Slot>
+        <Day>monday morning</Day>
+        <Hour>place 1</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>monday morning</Day>
+        <Hour>place 2</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>monday morning</Day>
+        <Hour>place 3</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>monday morning</Day>
+        <Hour>Reserve</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Tuesday morning</Day>
+        <Hour>place 1</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Tuesday morning</Day>
+        <Hour>place 2</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Tuesday morning</Day>
+        <Hour>place 3</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Tuesday morning</Day>
+        <Hour>Reserve</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Wednesday morning</Day>
+        <Hour>place 1</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Wednesday morning</Day>
+        <Hour>place 2</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Wednesday morning</Day>
+        <Hour>place 3</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Wednesday morning</Day>
+        <Hour>Reserve</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Thursday morning</Day>
+        <Hour>place 1</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Thursday morning</Day>
+        <Hour>place 2</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Thursday morning</Day>
+        <Hour>place 3</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Thursday morning</Day>
+        <Hour>Reserve</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Friday morning</Day>
+        <Hour>place 1</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Friday morning</Day>
+        <Hour>place 2</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Friday morning</Day>
+        <Hour>place 3</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Friday morning</Day>
+        <Hour>Reserve</Hour>
+      </Selected_Time_Slot>
+      <Min_Number_of_Occupied_Time_Slots>5</Min_Number_of_Occupied_Time_Slots>
+      <Active>true</Active>
+      <Comments></Comments>
+    </ConstraintActivitiesOccupyMinTimeSlotsFromSelection>
+    <ConstraintActivitiesOccupyMinTimeSlotsFromSelection>
+      <Weight_Percentage>100</Weight_Percentage>
+      <Number_of_Activities>5</Number_of_Activities>
+      <Activity_Id>173</Activity_Id>
+      <Activity_Id>174</Activity_Id>
+      <Activity_Id>175</Activity_Id>
+      <Activity_Id>176</Activity_Id>
+      <Activity_Id>177</Activity_Id>
+      <Number_of_Selected_Time_Slots>20</Number_of_Selected_Time_Slots>
+      <Selected_Time_Slot>
+        <Day>monday morning</Day>
+        <Hour>place 1</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>monday morning</Day>
+        <Hour>place 2</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>monday morning</Day>
+        <Hour>place 3</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>monday morning</Day>
+        <Hour>Reserve</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Tuesday morning</Day>
+        <Hour>place 1</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Tuesday morning</Day>
+        <Hour>place 2</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Tuesday morning</Day>
+        <Hour>place 3</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Tuesday morning</Day>
+        <Hour>Reserve</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Wednesday morning</Day>
+        <Hour>place 1</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Wednesday morning</Day>
+        <Hour>place 2</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Wednesday morning</Day>
+        <Hour>place 3</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Wednesday morning</Day>
+        <Hour>Reserve</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Thursday morning</Day>
+        <Hour>place 1</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Thursday morning</Day>
+        <Hour>place 2</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Thursday morning</Day>
+        <Hour>place 3</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Thursday morning</Day>
+        <Hour>Reserve</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Friday morning</Day>
+        <Hour>place 1</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Friday morning</Day>
+        <Hour>place 2</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Friday morning</Day>
+        <Hour>place 3</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Friday morning</Day>
+        <Hour>Reserve</Hour>
+      </Selected_Time_Slot>
+      <Min_Number_of_Occupied_Time_Slots>5</Min_Number_of_Occupied_Time_Slots>
+      <Active>true</Active>
+      <Comments></Comments>
+    </ConstraintActivitiesOccupyMinTimeSlotsFromSelection>
+    <ConstraintActivitiesOccupyMinTimeSlotsFromSelection>
+      <Weight_Percentage>100</Weight_Percentage>
+      <Number_of_Activities>5</Number_of_Activities>
+      <Activity_Id>178</Activity_Id>
+      <Activity_Id>179</Activity_Id>
+      <Activity_Id>180</Activity_Id>
+      <Activity_Id>181</Activity_Id>
+      <Activity_Id>182</Activity_Id>
+      <Number_of_Selected_Time_Slots>24</Number_of_Selected_Time_Slots>
+      <Selected_Time_Slot>
+        <Day>monday morning</Day>
+        <Hour>place 1</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>monday morning</Day>
+        <Hour>place 2</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>monday morning</Day>
+        <Hour>place 3</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>monday morning</Day>
+        <Hour>Reserve</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Tuesday morning</Day>
+        <Hour>place 1</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Tuesday morning</Day>
+        <Hour>place 2</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Tuesday morning</Day>
+        <Hour>place 3</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Tuesday morning</Day>
+        <Hour>Reserve</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Wednesday afternoon</Day>
+        <Hour>place 1</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Wednesday afternoon</Day>
+        <Hour>place 2</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Wednesday afternoon</Day>
+        <Hour>place 3</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Wednesday afternoon</Day>
+        <Hour>Reserve</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Thursday morning</Day>
+        <Hour>place 1</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Thursday morning</Day>
+        <Hour>place 2</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Thursday morning</Day>
+        <Hour>place 3</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Thursday morning</Day>
+        <Hour>Reserve</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Thursday afternoon</Day>
+        <Hour>place 1</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Thursday afternoon</Day>
+        <Hour>place 2</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Thursday afternoon</Day>
+        <Hour>place 3</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Thursday afternoon</Day>
+        <Hour>Reserve</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Friday morning</Day>
+        <Hour>place 1</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Friday morning</Day>
+        <Hour>place 2</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Friday morning</Day>
+        <Hour>place 3</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Friday morning</Day>
+        <Hour>Reserve</Hour>
+      </Selected_Time_Slot>
+      <Min_Number_of_Occupied_Time_Slots>5</Min_Number_of_Occupied_Time_Slots>
+      <Active>true</Active>
+      <Comments></Comments>
+    </ConstraintActivitiesOccupyMinTimeSlotsFromSelection>
+    <ConstraintActivitiesOccupyMinTimeSlotsFromSelection>
+      <Weight_Percentage>100</Weight_Percentage>
+      <Number_of_Activities>5</Number_of_Activities>
+      <Activity_Id>188</Activity_Id>
+      <Activity_Id>189</Activity_Id>
+      <Activity_Id>190</Activity_Id>
+      <Activity_Id>191</Activity_Id>
+      <Activity_Id>192</Activity_Id>
+      <Number_of_Selected_Time_Slots>8</Number_of_Selected_Time_Slots>
+      <Selected_Time_Slot>
+        <Day>monday morning</Day>
+        <Hour>Reserve</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Monday afternoon</Day>
+        <Hour>Reserve</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Tuesday afternoon</Day>
+        <Hour>Reserve</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Wednesday morning</Day>
+        <Hour>Reserve</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Wednesday afternoon</Day>
+        <Hour>Reserve</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Thursday afternoon</Day>
+        <Hour>Reserve</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Friday morning</Day>
+        <Hour>Reserve</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Friday afternoon</Day>
+        <Hour>Reserve</Hour>
+      </Selected_Time_Slot>
+      <Min_Number_of_Occupied_Time_Slots>5</Min_Number_of_Occupied_Time_Slots>
+      <Active>true</Active>
+      <Comments></Comments>
+    </ConstraintActivitiesOccupyMinTimeSlotsFromSelection>
+    <ConstraintActivitiesOccupyMinTimeSlotsFromSelection>
+      <Weight_Percentage>100</Weight_Percentage>
+      <Number_of_Activities>4</Number_of_Activities>
+      <Activity_Id>208</Activity_Id>
+      <Activity_Id>209</Activity_Id>
+      <Activity_Id>210</Activity_Id>
+      <Activity_Id>211</Activity_Id>
+      <Number_of_Selected_Time_Slots>16</Number_of_Selected_Time_Slots>
+      <Selected_Time_Slot>
+        <Day>Monday afternoon</Day>
+        <Hour>place 1</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Monday afternoon</Day>
+        <Hour>place 2</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Monday afternoon</Day>
+        <Hour>place 3</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Monday afternoon</Day>
+        <Hour>Reserve</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Tuesday afternoon</Day>
+        <Hour>place 1</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Tuesday afternoon</Day>
+        <Hour>place 2</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Tuesday afternoon</Day>
+        <Hour>place 3</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Tuesday afternoon</Day>
+        <Hour>Reserve</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Thursday afternoon</Day>
+        <Hour>place 1</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Thursday afternoon</Day>
+        <Hour>place 2</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Thursday afternoon</Day>
+        <Hour>place 3</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Thursday afternoon</Day>
+        <Hour>Reserve</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Friday morning</Day>
+        <Hour>place 1</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Friday morning</Day>
+        <Hour>place 2</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Friday morning</Day>
+        <Hour>place 3</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Friday morning</Day>
+        <Hour>Reserve</Hour>
+      </Selected_Time_Slot>
+      <Min_Number_of_Occupied_Time_Slots>4</Min_Number_of_Occupied_Time_Slots>
+      <Active>true</Active>
+      <Comments></Comments>
+    </ConstraintActivitiesOccupyMinTimeSlotsFromSelection>
+    <ConstraintActivitiesOccupyMinTimeSlotsFromSelection>
+      <Weight_Percentage>100</Weight_Percentage>
+      <Number_of_Activities>3</Number_of_Activities>
+      <Activity_Id>212</Activity_Id>
+      <Activity_Id>213</Activity_Id>
+      <Activity_Id>214</Activity_Id>
+      <Number_of_Selected_Time_Slots>16</Number_of_Selected_Time_Slots>
+      <Selected_Time_Slot>
+        <Day>monday morning</Day>
+        <Hour>place 1</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>monday morning</Day>
+        <Hour>place 2</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>monday morning</Day>
+        <Hour>place 3</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>monday morning</Day>
+        <Hour>Reserve</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Tuesday morning</Day>
+        <Hour>place 1</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Tuesday morning</Day>
+        <Hour>place 2</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Tuesday morning</Day>
+        <Hour>place 3</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Tuesday morning</Day>
+        <Hour>Reserve</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Tuesday afternoon</Day>
+        <Hour>place 1</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Tuesday afternoon</Day>
+        <Hour>place 2</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Tuesday afternoon</Day>
+        <Hour>place 3</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Tuesday afternoon</Day>
+        <Hour>Reserve</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Thursday morning</Day>
+        <Hour>place 1</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Thursday morning</Day>
+        <Hour>place 2</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Thursday morning</Day>
+        <Hour>place 3</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Thursday morning</Day>
+        <Hour>Reserve</Hour>
+      </Selected_Time_Slot>
+      <Min_Number_of_Occupied_Time_Slots>2</Min_Number_of_Occupied_Time_Slots>
+      <Active>true</Active>
+      <Comments></Comments>
+    </ConstraintActivitiesOccupyMinTimeSlotsFromSelection>
+    <ConstraintActivitiesOccupyMinTimeSlotsFromSelection>
+      <Weight_Percentage>100</Weight_Percentage>
+      <Number_of_Activities>1</Number_of_Activities>
+      <Activity_Id>162</Activity_Id>
+      <Number_of_Selected_Time_Slots>4</Number_of_Selected_Time_Slots>
+      <Selected_Time_Slot>
+        <Day>Friday afternoon</Day>
+        <Hour>place 1</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Friday afternoon</Day>
+        <Hour>place 2</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Friday afternoon</Day>
+        <Hour>place 3</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Friday afternoon</Day>
+        <Hour>Reserve</Hour>
+      </Selected_Time_Slot>
+      <Min_Number_of_Occupied_Time_Slots>1</Min_Number_of_Occupied_Time_Slots>
+      <Active>true</Active>
+      <Comments></Comments>
+    </ConstraintActivitiesOccupyMinTimeSlotsFromSelection>
+    <ConstraintActivitiesOccupyMinTimeSlotsFromSelection>
+      <Weight_Percentage>100</Weight_Percentage>
+      <Number_of_Activities>5</Number_of_Activities>
+      <Activity_Id>203</Activity_Id>
+      <Activity_Id>204</Activity_Id>
+      <Activity_Id>205</Activity_Id>
+      <Activity_Id>206</Activity_Id>
+      <Activity_Id>207</Activity_Id>
+      <Number_of_Selected_Time_Slots>28</Number_of_Selected_Time_Slots>
+      <Selected_Time_Slot>
+        <Day>monday morning</Day>
+        <Hour>place 1</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>monday morning</Day>
+        <Hour>place 2</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>monday morning</Day>
+        <Hour>place 3</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>monday morning</Day>
+        <Hour>Reserve</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Monday afternoon</Day>
+        <Hour>place 1</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Monday afternoon</Day>
+        <Hour>place 2</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Monday afternoon</Day>
+        <Hour>place 3</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Monday afternoon</Day>
+        <Hour>Reserve</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Tuesday morning</Day>
+        <Hour>place 1</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Tuesday morning</Day>
+        <Hour>place 2</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Tuesday morning</Day>
+        <Hour>place 3</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Tuesday morning</Day>
+        <Hour>Reserve</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Wednesday afternoon</Day>
+        <Hour>place 1</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Wednesday afternoon</Day>
+        <Hour>place 2</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Wednesday afternoon</Day>
+        <Hour>place 3</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Wednesday afternoon</Day>
+        <Hour>Reserve</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Thursday morning</Day>
+        <Hour>place 1</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Thursday morning</Day>
+        <Hour>place 2</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Thursday morning</Day>
+        <Hour>place 3</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Thursday morning</Day>
+        <Hour>Reserve</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Friday morning</Day>
+        <Hour>place 1</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Friday morning</Day>
+        <Hour>place 2</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Friday morning</Day>
+        <Hour>place 3</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Friday morning</Day>
+        <Hour>Reserve</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Friday afternoon</Day>
+        <Hour>place 1</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Friday afternoon</Day>
+        <Hour>place 2</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Friday afternoon</Day>
+        <Hour>place 3</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Friday afternoon</Day>
+        <Hour>Reserve</Hour>
+      </Selected_Time_Slot>
+      <Min_Number_of_Occupied_Time_Slots>5</Min_Number_of_Occupied_Time_Slots>
+      <Active>true</Active>
+      <Comments></Comments>
+    </ConstraintActivitiesOccupyMinTimeSlotsFromSelection>
+    <ConstraintActivitiesOccupyMinTimeSlotsFromSelection>
+      <Weight_Percentage>100</Weight_Percentage>
+      <Number_of_Activities>5</Number_of_Activities>
+      <Activity_Id>198</Activity_Id>
+      <Activity_Id>199</Activity_Id>
+      <Activity_Id>200</Activity_Id>
+      <Activity_Id>201</Activity_Id>
+      <Activity_Id>202</Activity_Id>
+      <Number_of_Selected_Time_Slots>28</Number_of_Selected_Time_Slots>
+      <Selected_Time_Slot>
+        <Day>monday morning</Day>
+        <Hour>place 1</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>monday morning</Day>
+        <Hour>place 2</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>monday morning</Day>
+        <Hour>place 3</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>monday morning</Day>
+        <Hour>Reserve</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Tuesday morning</Day>
+        <Hour>place 1</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Tuesday morning</Day>
+        <Hour>place 2</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Tuesday morning</Day>
+        <Hour>place 3</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Tuesday morning</Day>
+        <Hour>Reserve</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Tuesday afternoon</Day>
+        <Hour>place 1</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Tuesday afternoon</Day>
+        <Hour>place 2</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Tuesday afternoon</Day>
+        <Hour>place 3</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Tuesday afternoon</Day>
+        <Hour>Reserve</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Wednesday morning</Day>
+        <Hour>place 1</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Wednesday morning</Day>
+        <Hour>place 2</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Wednesday morning</Day>
+        <Hour>place 3</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Wednesday morning</Day>
+        <Hour>Reserve</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Wednesday afternoon</Day>
+        <Hour>place 1</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Wednesday afternoon</Day>
+        <Hour>place 2</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Wednesday afternoon</Day>
+        <Hour>place 3</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Wednesday afternoon</Day>
+        <Hour>Reserve</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Thursday morning</Day>
+        <Hour>place 1</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Thursday morning</Day>
+        <Hour>place 2</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Thursday morning</Day>
+        <Hour>place 3</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Thursday morning</Day>
+        <Hour>Reserve</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Thursday afternoon</Day>
+        <Hour>place 1</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Thursday afternoon</Day>
+        <Hour>place 2</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Thursday afternoon</Day>
+        <Hour>place 3</Hour>
+      </Selected_Time_Slot>
+      <Selected_Time_Slot>
+        <Day>Thursday afternoon</Day>
+        <Hour>Reserve</Hour>
+      </Selected_Time_Slot>
+      <Min_Number_of_Occupied_Time_Slots>4</Min_Number_of_Occupied_Time_Slots>
+      <Active>true</Active>
+      <Comments></Comments>
+    </ConstraintActivitiesOccupyMinTimeSlotsFromSelection>
+    <ConstraintTeachersMaxHoursDaily>
+      <Weight_Percentage>100</Weight_Percentage>
+      <Maximum_Hours_Daily>1</Maximum_Hours_Daily>
+      <Active>true</Active>
+      <Comments></Comments>
+    </ConstraintTeachersMaxHoursDaily>
+  </Time_Constraints_List>
+  <Space_Constraints_List>
+    <ConstraintBasicCompulsorySpace>
+      <Weight_Percentage>100</Weight_Percentage>
+      <Active>true</Active>
+      <Comments></Comments>
+    </ConstraintBasicCompulsorySpace>
+  </Space_Constraints_List>
+  <Timetable_Generation_Options_List>
+  </Timetable_Generation_Options_List>
+</fet>

@@ -1,0 +1,1167 @@
+This is FET version 7.12.0
+
+Program description:
+
+	FET is free timetabling software (licensed under the GNU Affero General Public License version 3).
+	This program aims to automatically generate the timetable of a school, high-school or university.
+	It can be used for other timetabling purposes.
+
+	FET can mean "Free Educational Timetabling" (the "E" in the middle may also stand for other words, based on your personal preference).
+
+	FET homepage: https://lalescu.ro/liviu/fet/
+
+
+Requirements:
+
+	FET is created in the following environment: openSUSE Tumbleweed GNU/Linux distribution, Linux 7.2.9, Xfce 4.20,
+	Xfce Terminal Emulator 1.2.0, Midnight Commander 4.8.33, Krusader 2.9.0, Kate 26.08.2, KDiff3 0.9.99-beta, grep 3.12, sed 4.10,
+	Thunar Bulk Rename 4.20.10, Qt 6.12.0, QMake 3.1, CMake 4.4.3, Ninja 1.13.2, Qt Creator 20.0.2, GCC 16.2.1, Clang 23.1.2, GNU Make 4.4.1,
+	GDB 16.3, Valgrind 3.27.1, Coverity Scan 2024.12.1, Cppcheck 2.19, SpeedCrunch 1.0, QCAD Community Edition 3.26.0.0, Inkscape 1.4.4,
+	GIMP 3.2.6, ImageMagick 7.1.2-32, International Ispell 3.1.20 / Aspell 0.60.8.2, tar 1.35, Gzip 1.15, bzip2 1.0.8, xz 5.8.4,
+	other great software (most of these software packages are free software, in the sense defined by The Free Software Foundation).
+
+	The executable version of FET for Windows is obtained in the following environment: Windows 11 operating system,
+	Command Prompt, Total Commander 11.58, Notepad, Python 3.9.7, ActivePerl 5.28, CMake 3.30.5, Ninja 1.12.1, Qt 6.12.0,
+	QMake 3.1, Qt Creator 20.0.1, MinGW 13.1.0, Microsoft Visual C++ 2019, 7-Zip 26.04.
+
+	The executable version of FET for GNU/Linux is obtained in the following environment: GNU/Linux Mint 21.3 "Virginia" Xfce Edition
+	with the standard packages, Qt 6.12.0, and possibly linuxdeploy 1-alpha (most of these software packages are free software,
+	in the sense defined by The Free Software Foundation).
+
+	FET is a C++ application and uses Qt, a C++ toolkit for cross-platform application development.
+	FET can be run on any platform supported by Qt (GNU/Linux, Windows, macOS, and maybe others).
+
+	You will need a C++17 compliant C++ compiler to compile FET.
+
+	GNU/Linux, macOS:
+	For running, you need only the archive of FET compiled for your operating system (which contains the necessary libraries).
+	CMake is the new recommended way to compile FET. QMake is the old and not recommended way.
+	For compiling, you will need this software:
+		CMake 3.28 or later (for compiling with CMake).
+		GCC 16.2.1 or similar.
+		Qt 6.12.0 or compatible. CMake: Qt 6.10 minimum. QMake: Qt 5.15 or later should be fine.
+		For compiling with QMake: Make 4.2.1 or similar (GNU Make).
+		QMake 3.1 or compatible (usually available with Qt).
+
+		Note: You need a C++17 compliant C++ compiler. You might be able to use the Clang C++ compiler or other C++ compiler instead of GCC.
+
+		Note2: A dependency under GNU/Linux might cause problems: if you get an error like:
+		"qt.qpa.plugin: Could not load the Qt platform plugin "xcb" in "" even though it was found.
+		This application failed to start because no Qt platform plugin could be initialized. Reinstalling the application may fix this problem.
+		Available platform plugins are: eglfs, wayland-egl, vkkhrdisplay, xcb, offscreen, vnc, minimalegl, linuxfb, minimal, wayland.
+		Aborted (core dumped),"
+		try to install xcb-cursor0 or libxcb-cursor0.
+
+	Windows:
+	For running, you need only the archive of FET compiled for Windows (which contains the necessary dll-s).
+	For compiling, you need Qt and a compatible C++ compiler complying with the C++17 standard (MinGW is a possibility).
+
+
+Download:
+
+	You can download the latest version from the FET homepage, https://lalescu.ro/liviu/fet/
+
+
+Getting - compiling - installing the GNU tools: Make and GCC:
+
+	GNU/Linux, maybe macOS: Most probably, your platform has these installed by default or available on the internet
+	as precompiled packages. If you don't have them, please install them using YaST (on openSUSE), Adept Manager
+	(on Ubuntu) or other package manager.
+	To verify that you have the correct packages, write "make --version", "gcc --version" and
+	"g++ --version".
+	Advice from a user on Ubuntu: "sudo apt-get install build-essential" installs build libraries commonly used.
+
+	Maybe macOS (from the user Darren McDonald): Install Xcode (the current version is 12.5.1) from the Mac App Store. (Once installed, you'll
+	need to open the Xcode app to finish the installation.)
+
+	Windows: you need a Qt compatible C++ compiler.
+	Maybe an easy option is the MinGW compiler, available optionally with the Qt distribution or on the Qt download page.
+	(You might also download MinGW from the internet. There might be more variants. One of them is on: https://www.mingw-w64.org/)
+
+
+Getting - compiling - installing Qt:
+
+	Qt homepage: https://www.qt.io/
+
+	You will need Qt 6.12.0 or compatible to compile FET. Qt 5.15 or later should be fine.
+	You can get the corresponding version of Qt with your package manager or from the internet (preferably from the Qt homepage).
+	Qt can be used with the GNU (L)GPL or commercial license (The authors chose the GNU (L)GPL license).
+
+	GNU/Linux: It is possible to use YaST (or Adept Manager) or other package managers to get your version of Qt, pre-compiled.
+	Or you can download, (possibly) compile and install Qt from the internet (preferably from its homepage).
+
+	Windows - Download latest Qt from the internet (preferably from its homepage). In the latest precompiled Qt versions the "-schannel" option is
+	enabled by default, so there is no need to compile Qt. But in case there is such need, these are the instructions:
+	To compile Qt from the sources using the additional configure option "-schannel" (this is done to ensure that SSL will work in FET using the
+	available SSL dll-s from Windows): You can choose to download/compile/install only the qtbase component, with a configure command which might look like:
+	"configure.bat -opensource -confirm-license -platform win32-g++ -schannel -opengl desktop -release -nomake examples -nomake tests -prefix C:\Qt\6.12.0".
+	(When we tried to use the recommended option "-opengl dynamic" we got a compiler error.)
+	Note that to be able to open ui files with Qt Designer or ts files with Qt Linguist you need to install the Qt component qttools
+	(or the whole Qt package).
+
+	macOS:
+	Install Qt (the current version is 6.12.0) from https://www.qt.io. The default install location is /Users/YOURUSERNAME/Qt, and you can create
+	a (free) Qt account. [Update: if you're just using Qt for FET, you should select to "download for open source".]
+
+	Note about the Qt "QMAKESPEC" variable: advanced topic, read this if you get Qt errors about the environment not being set, or environment
+	variable QMAKESPEC not being set, or if the Qt environment is not set correctly: Qt needs to know the environment you are using. It is usually
+	something like: linux-g++, macx-g++ or win32-g++ (platform-compiler). You can find all the supported platforms in the directory "mkspecs" of Qt
+	(some usual locations are /usr/share/qt5/mkspecs or /usr/lib/qt5/mkspecs on GNU/Linux or C:\Qt\6.12.0\mkspecs on Windows).
+	It seems that Qt automatically finds the platform (there is a default configuration in the "default" subdirectory of the "mkspecs" directory,
+	which is created automatically when you install Qt). If the default configuration is not working or is wrong, you may need to set the
+	correct QMAKESPEC variable for your platform. Under Windows, you can create an environment variable QMAKESPEC equal to win32-g++
+	(if you are using MinGW), under other platforms create an environment variable named QMAKESPEC equal with the correct platform-compiler
+	you are working on (for instance macx-g++ or linux-g++).
+
+
+Compiling FET:
+
+	1. With CMake (recommended):
+
+	Note: if you compile with CMake and you need the qm language files (if you want to use other languages than en_US for FET), you might need to
+	copy/move them from the build/translations directory, _after_ compiling the program (they are generated by the build procedure), in a suitable
+	location, so that the fet and/or fet-cl executables can access them (see the possible locations below, in the 'Languages (translations)' section).
+
+	You will need Qt version >= 6.10.0, and CMake version >= 3.28.
+
+	Run "qt-cmake -B build" (qt-cmake is located in the bin directory of Qt), then "cmake --build build --parallel 16".
+	Note: to use a different C++ compiler than the standard one, you can use the option "CMAKE_CXX_COMPILER"; for instance,
+	to use Clang, write "qt-cmake -B build -DCMAKE_CXX_COMPILER=clang++".
+	Note: the first command might issue a CMake warning, if you don't have the package Qt LinguistTools installed. This package
+	is only used by the FET authors to update and release the translation files. You can compile FET without this package,
+	so you can safely ignore the possible warning.
+	Note: "build" can be changed to a name of your choice (but not "--build"); the last "build" can be changed to another name.
+	Note: 16 is the number of threads of your processor to compile on. If you have a processor with 8 cores and 16 threads,
+	you might want to use 8 instead of 16. The authors are not sure which variant is faster.
+	Note: on Windows 11, the authors write these commands in cmd:
+		set PATH=C:\Qt\6.12.0\mingw_64\bin;C:\Qt\Tools\mingw1310_64\bin;%PATH%
+		set PATH=C:\Qt\Tools\CMake_64\bin;%PATH%
+		qt-cmake -G "MinGW Makefiles" -B build
+
+	Note GL CMake: On GNU/Linux, if you get an error related to QtGui, you may need to install additional packages before compiling FET.
+	For instance, on openSUSE GNU/Linux you may need to install Mesa-devel (or maybe only Mesa-libGL-devel); on Mint GNU/Linux you
+	may need to install libgl1-mesa-dev.
+
+	Note NUseSystemLocale: If you want FET to autodetect the system locale language, you can use the custom CMake option
+	"USE_SYSTEM_LOCALE", as: "qt-cmake -B build -DUSE_SYSTEM_LOCALE=ON", then continue with the build, as above.
+	This will work if you recompile from the beginning all the FET package (remove all the intermediary files and recompile),
+	and also if you did not use FET on this machine or if you remove the settings file/registry entry for FET (otherwise
+	FET will retain the language which was already saved in its settings).
+
+	Note: You can define also the options NO_WINDOWS_CONSOLE (so that fet-cl.exe will not open a console on Windows),
+	and COMMAND_LINE_ONLY, to only compile fet-cl, without fet. These options can be defined as above (qt-cmake -B build
+	-DNO_WINDOWS_CONSOLE=ON and qt-cmake -B build -DCOMMAND_LINE_ONLY=ON); you can define multiple options together, of course.
+
+	2. With QMake (old method, not recommended):
+
+	Note: If you compile with QMake and you need the qm language files (if you want to use other languages than en_US for FET),
+	you need to generate them with the command:
+	Qt 5.15: 'lrelease src.pro' in the 'src' directory of the FET sources (lrelease being an executable from the Qt 5.15 directory), or
+	Qt 6: 'lrelease-pro src.pro' in the 'src' directory of the FET sources (lrelease-pro being an executable from the Qt 6 directory).
+
+	You will need a C++17 compliant C++ compiler to compile FET.
+
+	Note: if after unpacking the tar.xz sources archive you obtain some files with incomplete/truncated file names in the sources directories,
+	you might need to use a better (un)packer (probably a recent version of the official tar and xz should be fine).
+	For GNU/Linux and maybe macOS, "tar -Jxvf fet-v.v.v.tar.xz" should work correctly.
+	For Windows, either use a modern good (un)packer, or, advice from a user:
+		1. download mingw-get-setup.exe from https://sourceforge.net/projects/mingw/files/
+		2. run mingw-get-setup.exe
+		3. check msys-base to be installed, Apply Changes from Installation menu and close MinGW Installation Manager
+		4. run C:\MinGW\msys\1.0\msys.bat
+		5. $ cd to the directory where the .tar.xz file is
+		6. $ tar -Jxvf fet-v.v.v.tar.xz
+
+	Note NMkJobs: advice from a user: if you have a multiple core computer, you may be able to split the compilation into more threads, with the -j option for the
+	make command, so that the compilation is faster. This option creates a number of compilation threads equal to the number specified along with the -j option.
+	Under GNU/Linux or macOS, just write "make -j 16" if you have a 16 threads computer. This is proven to work under GNU/Linux and macOS. Under Windows it depends
+	on the C++ compiler (you may try it to see if it works) - with MinGW it works.
+
+	Note: if you had a wrongly setup environment and you updated it, before the new compilation you might want to remove all the previously generated temporary
+	files, like the Makefile-s and the generated files in the tmp directory. Under GNU/Linux, this can be done with a "make distclean", but it is maybe the best
+	idea to remove everything and unpack again the FET sources.
+
+	Currently FET can be compiled with a C++ compiler, using Qt version 6.12.0 or compatible.
+
+	Note NUseSystemLocale: If you want FET to autodetect the system locale language, type <<qmake fet.pro "DEFINES+=USE_SYSTEM_LOCALE">>
+	or simply <<qmake "DEFINES+=USE_SYSTEM_LOCALE">>. This will work if you recompile from the beginning all the FET package (remove
+	all the intermediary files and recompile), and also if you did not use FET on this machine or if you remove the settings file/registry entry for FET
+	(otherwise FET will retain the language which was already saved in its settings).
+	
+	Note GL QMake: If you get an error like this:
+	In file included from ../../Qt5.3.2/5.3/gcc_64/include/QtGui/qopenglcontext.h:62:0,
+		from ../../Qt5.3.2/5.3/gcc_64/include/QtGui/QtGui:32,
+		from ../../Qt5.3.2/5.3/gcc_64/include/QtWidgets/QtWidgetsDepends:3,
+		from ../../Qt5.3.2/5.3/gcc_64/include/QtWidgets/QtWidgets:3,
+		from engine/import.cpp:35:
+	../../Qt5.3.2/5.3/gcc_64/include/QtGui/qopengl.h:110:21: fatal error: GL/gl.h: No such file or directory
+	 #  include <GL/gl.h>
+					^
+	compilation terminated.
+	you may need to install additional packages before compiling FET. For instance, on openSUSE GNU/Linux you may need to install Mesa-devel
+	(or maybe only Mesa-libGL-devel); on Mint GNU/Linux you may need to install libgl1-mesa-dev.
+
+	Note: If you want to compile only the command-line version, open the file fet.pro with a text editor and from the second line remove the
+	text "src/src.pro ".
+
+
+	GNU/Linux:
+	- You will need Qt 6.12.0 or compatible to compile this program.
+	- type "qmake fet.pro" or simply "qmake". You have to use QMake from Qt 6 series (this command is executed very fast, so don't worry if you
+		get immediate return from it)
+	See also notes NUseSystemLocale and Note4 above.
+	- type "make" (this takes some time). See also note NMkJobs above ("make -j 16" for instance will be much faster on a 16 threads processor).
+	The exact measured time to compile FET-6.28.0: 3 minutes 20 seconds on 16 threads (make -j 16) on a Ryzen 7 2700X.
+	To remove the compiled objects/executable: "make clean" and/or "make distclean".
+
+
+	macOS:
+	3 Variants:
+
+	1. First variant, if you use the GCC compiler:
+	- You will need Qt 6.12.0 or compatible to compile this program.
+	- type "qmake fet.pro" or simply "qmake". You have to use QMake from Qt 6 series.
+	(this command is executed very fast, so don't worry if you get immediate return from it)
+	- IMPORTANT: you might need to write: "qmake -spec macx-g++ fet.pro", if "qmake fet.pro"
+	does not produce a correct makefile.
+	See also notes NUseSystemLocale and Note4 above.
+	- type "make" (this takes some time). See also note NMkJobs above ("make -j 16" for instance will be much faster on a 16 threads processor).
+	The compilation might take 3-5 minutes on multiple threads on a modern computer.
+	To remove the compiled objects/executable: "make clean" and/or "make distclean".
+
+	2. Another variant:
+	- Type "qmake fet.pro" and then "xcodebuild".
+
+	3. Another variant, if you use the Clang C++ compiler (which seems to be the default for Qt 6.12.0 on macOS):
+	It seems that you need to type:
+	/Users/YOURUSERNAME/Qt/6.12.0/macos/bin/qmake -r -spec /Users/YOURUSERNAME/Qt/6.12.0/macos/mkspecs/macx-clang
+	(the -r parameter might not be necessary.)
+
+	If you are compiling on a computer with Mac silicon (e.g., an M1 MacBook, etc.) and want to create a version that will run on Intel processors as well,
+	instead of the command above, use
+	/Users/YOURUSERNAME/Qt/6.12.0/macos/bin/qmake -r -spec /Users/YOURUSERNAME/Qt/6.12.0/macos/mkspecs/macx-clang QMAKE_APPLE_DEVICE_ARCHS="x86_64 arm64"
+
+	Then "make" (this takes some time). See also note NMkJobs above ("make -j 16" for instance will be much faster on a 16 threads processor).
+	The compilation might take 3-5 minutes on multiple threads on a modern computer.
+	To remove the compiled objects/executable: "make clean" and/or "make distclean".
+	Please see: https://lalescu.ro/liviu/fet/forum/index.php?topic=2488.msg13425#msg13425 (and also see the whole topic there.)
+
+
+	Windows: MinGW C++ compiler: you need Qt 6.12.0 or compatible, and MinGW.
+	You might use other C++ compilers if you want, please see the Qt documentation.
+	for other variants. Any C++ compiler that supports Qt should be good.
+	You need to run "qmake fet.pro" or "qmake" (this command is executed very fast, so don't worry if you get
+	immediate return from it) and then, if you are using MinGW, "mingw32-make" (this takes some time)
+	in a command line in the FET directory.
+	See also note NUseSystemLocale above.
+	See also Note GL QMake above.
+	See also note NMkJobs above ("mingw32-make -j 16" for instance will be much faster on a 16 threads processor).
+	The exact measured time to compile FET-6.28.0: 4 minutes 30 seconds on 16 threads (mingw-make -j 16) on a Ryzen 7 2700X.
+	(You can use the command line prompt of Windows or the Qt command line prompt shortcut in the Qt shortcuts menu.)
+	Then, you can remove the directories "src" and "tmp", to save up space, if you want.
+	You will need to copy the dll-s in the same directories as in the official FET archive for Windows.
+
+
+Installing FET:
+
+	1. With CMake:
+
+	Run "cmake --install build [--prefix PREFIX]", [--prefix PREFIX] being optional, and PREFIX is of your choice (might work
+	with relative paths, but the best is to give an absolute path). Then you might need to run windeployqt (on Windows) or
+	macdeployqt (on macOS) to make a universally runnable program.
+	Note: "build" can be changed to a name of your choice; the last "build" can be changed to another name.
+
+	Note for macOS: If you would like to obtain a universally runnable package, you might need to set CMAKE_OSX_ARCHITECTURES to x86_64;arm64 and
+	set CMAKE_OSX_DEPLOYMENT_TARGET appropriately.
+
+	2. With QMake (old method):
+
+	GNU/Linux, and maybe macOS:
+	Type "make install" with root permissions.
+	
+	GNU/Linux: to associate the *.fet files with the FET executable and to make them display the FET icon in the file browser, after "make install",
+	you might need to write these three commands (again, with root permissions):
+		xdg-icon-resource forceupdate --theme hicolor
+		update-mime-database /usr/share/mime
+		update-desktop-database
+	
+	GNU/Linux: How to obtain a universally running file using linuxdeploy:
+	
+	Download these 3 linuxdeploy packages (the authors use the x86_64 executable packages, which are for 64-bit systems):
+		https://github.com/linuxdeploy/linuxdeploy/releases/tag/continuous
+		https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/tag/continuous
+		https://github.com/linuxdeploy/linuxdeploy-plugin-appimage/releases/tag/continuous
+	
+	Assuming you work from the command line, set these environment variables:
+		export LD_LIBRARY_PATH=/home/user/Qt/6.12.0/gcc_64/lib
+		export QMAKE=/home/user/Qt/6.12.0/gcc_64/bin/qmake
+	
+	Assuming you compiled FET and that you copied the whole directory to /home/user/fet-appdir/ and to /home/user/fet-appimage/ :
+	
+	AppDir:
+		./linuxdeploy-x86_64.AppImage --appdir /home/user/fet-appdir/fet-v.v.v/ -e /home/user/fet-appdir/fet-v.v.v/fet
+			-d /home/user/fet-appdir/fet-v.v.v/fet.desktop -i /home/user/fet-appdir/fet-v.v.v/icons/256x256/fet.png --plugin qt
+		also for fet-cl, without -d and -i.
+		Copy/move the translations directory near the executables, in the directory /home/user/fet-appdir/fet-v.v.v/AppDir/usr/bin.
+	
+	AppImage:
+		make install INSTALL_ROOT=AppDir
+		Create the directory /home/user/fet-appimage/fet-v.v.v/AppDir/usr/bin if it does not exist.
+		Copy/move the fet executable to /home/user/fet-appimage/fet-v.v.v/AppDir/usr/bin/fet.
+		Copy/move the translations directory near the executable, in the directory /home/user/fet-appimage/fet-v.v.v/AppDir/usr/bin.
+		./linuxdeploy-x86_64.AppImage --appdir /home/user/fet-appimage/fet-v.v.v/AppDir/ -e /home/user/fet-appimage/fet-v.v.v/AppDir/usr/bin/fet
+			-d /home/user/fet-appimage/fet-v.v.v/AppDir/usr/share/applications/fet.desktop
+			-i /home/user/fet-appimage/fet-v.v.v/AppDir/usr/share/icons/hicolor/256x256/apps/fet.png
+			--plugin qt --output appimage
+	
+	macOS: The user Darren McDonald reported that one can obtain a universal macOS executable with:
+	cd /Users/YOURUSERNAME/Qt/6.12.0/macos/bin/
+	./macdeployqt /Users/YOURUSERNAME/Downloads/fet-v.v.v/fet.app
+	
+	Windows:
+	Move the FET directory to a place of your choice.
+
+
+Running FET:
+
+	1. With CMake: run the fet or the fet-cl executable.
+
+	2. With QMake (old method):
+
+	Note: The FET main window contains a menu with the items: File, Data, History, Statistics, Advanced,
+	Timetable, Settings, Help. Everything is right if you have that. Optionally, on the main window there may be a toolbox
+	containing shortcuts (if selected by the user in the settings. By default it is selected).
+	
+	To run FET in interface mode, you just need to run the executable named fet or fet.exe. You can also open directly a fet data file, by giving it
+	as a unique argument to the FET executable: "fet filename.fet" (or, on Windows, "fet.exe filename.fet").
+
+	GNU/Linux, and maybe macOS:
+	- If you installed FET with "make install":
+		Run the FET executable from the directory /usr/bin/ (it should be /usr/bin/fet for the interface version or /usr/bin/fet-cl for command line),
+		or use the FET shortcut (/usr/share/applications/fet.desktop).
+	- If you did not install FET with "make install":
+		chdir to the directory where the fet executable is (for instance, "cd ~/fet-v.v.v/bin", or "cd ~/fet-v.v.v/build/src/interface", or
+		"cd ~/fet-v.v.v/") and run it with "./fet" or with the suitable command for your platform. Alternatively, you may run the executable named
+		fet from these directories, using another method.
+	You can give the fet executable a data file to be loaded on startup: "fet filename.fet" or "./fet filename.fet".
+
+	Note2: Starting with Qt 6.5, a new dependency under GNU/Linux might pose problems: if you get an error like:
+	"qt.qpa.plugin: Could not load the Qt platform plugin "xcb" in "" even though it was found.
+	This application failed to start because no Qt platform plugin could be initialized. Reinstalling the application may fix this problem.
+	Available platform plugins are: eglfs, wayland-egl, vkkhrdisplay, xcb, offscreen, vnc, minimalegl, linuxfb, minimal, wayland.
+	Aborted (core dumped)",
+	try to install xcb-cursor0 or libxcb-cursor0.
+
+	Note for macOS about using translations: If you want to use FET in a language other than the default, you'll need to move the translation files
+	into the appropriate location. The files you need to move can be found in /Users/YOURUSERNAME/Downloads/fet-v.v.v/translations. You'll want to
+	move all of the files ending with .qm to a new location. Open a new Finder window and right-click on the FET.app you've just created in
+	/Users/YOURUSERNAME/Downloads, and select Show Package Contents. Then open the Contents folder, and finally open the MacOS folder within Contents.
+	This is where you should move the .qm files. Once these have been moved, you switch FET languages within the FET app as usual.
+
+	Windows:
+	Run the fet.exe executable (its location is inside the fet-v.v.v directory, you can find it there if you have FET precompiled for Windows or after you compiled it).
+	You can give this executable a data file to be loaded on startup: "fet.exe filename.fet".
+
+	Command line version usage: fet-cl --inputfile=FILE [options]
+		FILE is the input file, for instance "data.fet"
+
+	Options:
+
+		--outputdir=DIR
+			DIR is the path to results directory, without trailing slash or backslash (default is current working path). Make sure you have write
+			permissions there.
+
+		--timelimitseconds=TLS
+			TLS is an integer representing the time limit, in seconds, after which the program will stop the generation (default 2000000000, which is
+			practically infinite).
+
+		--htmllevel=LEVEL
+			LEVEL is an integer from 0 to 7 and represents the detail level for the generated HTML timetables (default 2, larger values have more
+			details/facilities and larger file sizes).
+
+		--embedcssinhtmlhead=ECHH
+			ECHH is either true or false and represents whether you want to embed the CSS code in the head of each of the resulted HTML files, instead of
+			writing a separate unique CSS file (default false).
+
+		--htmlusespan=US
+			US is either true or false and represents if you want the timetables to use span for the activities with duration greater than 1 (default true).
+
+		--language=LANG
+			LANG is one of: ar, bg, bs, ca, cs, da, de, el, en_GB, en_US, es, eu, fa, fr, gl, he, hu, id, it, ja, lt, mk, ms, nl, pl, pt_BR, ro, ru,
+			si, sk, sq, sr, tr, uk, uz, vi, zh_CN, zh_TW (default en_US).
+
+		--writetimetableconflicts=WT1
+		--writetimetablesstatistics=WT2
+		--writetimetablesxml=WT3
+		--writetimetablesdayshorizontal=WT4
+		--writetimetablesdaysvertical=WT5
+		--writetimetablestimehorizontal=WT6
+		--writetimetablestimevertical=WT7
+		--writetimetablessubgroups=WT8
+		--writetimetablesgroups=WT9
+		--writetimetablesyears=WT10
+		--writetimetablesteachers=WT11
+		--writetimetablesteachersfreeperiods=WT12
+		--writetimetablesbuildings=WT13
+		--writetimetablesrooms=WT14
+		--writetimetablessubjects=WT15
+		--writetimetablesactivitytags=WT16
+		--writetimetablesactivities=WT17
+			WT1 to WT17 are either true or false and represent whether you want the corresponding timetables to be written on the disk (default true).
+
+		--printsubjects=PS
+			PS is either true or false and represents if you want the subjects to be present in the final HTML timetables (default true).
+
+		--printactivitytags=PAT
+			PAT is either true or false and represents if you want the activity tags to be present in the final HTML timetables (default true).
+
+		--printteachers=PT
+			PT is either true or false and represents if you want the teachers to be present in the final HTML timetables (default true).
+
+		--printstudents=PSt
+			PSt is either true or false and represents if you want the students to be present in the final HTML timetables (default true).
+
+		--printrooms=PR
+			PR is either true or false and represents if you want the rooms to be present in the final HTML timetables (default true).
+
+		--printnotavailable=PNA
+			PNA is either true or false and represents if you want -x- (for true) or --- (for false) in the generated timetables for the not available
+			slots (default true).
+
+		--printbreak=PB
+			PB is either true or false and represents if you want -X- (for true) or --- (for false) in the generated timetables for the break slots
+			(default true).
+
+		--sortsubgroups=SS
+			SS is either true or false and represents if you want the timetables of the subgroups to be sorted alphabetically by subgroup name
+			(default false).
+
+		--sortactivitiesbytags=SAT
+			SAT is either true or false and represents if you want the timetable cells containing several activities to display them sorted by tags
+			(default false).
+
+		--dividetimeaxisbydays=DTAD
+			DTAD is either true or false, represents if you want the HTML timetables with time axis divided by days (default false).
+
+		--duplicateverticalheaders=DVH
+			DVH is either true or false, represents if you want the HTML timetables to duplicate vertical headers to the right of the tables, for
+			easier reading (default false).
+
+		--printsimultaneousactivities=PSA
+			PSA is either true or false, represents if you want the HTML timetables to show related activities which have constraints with same
+			starting time (default false). (for instance, if A1 (T1, G1) and A2 (T2, G2) have constraint activities same starting time, then in T1's
+			timetable will appear also A2, at the same slot as A1).
+
+		--randomseeds10=s10 --randomseeds11=s11 --randomseeds12=s12 --randomseeds20=s20 --randomseeds21=s21 --randomseeds22=s22
+			where you need to specify all the 6 random seed components, and s10, s11, and s12 are integers from minimum 0 to maximum 4294967086,
+			not all 3 zero, and s20, s21, and s22 are integers from minimum 0 to maximum 4294944442, not all 3 zero (you can get the same timetable
+			if the input file is identical, if the FET version is the same (or if the generation algorithm did not change), and if all the 6 random seed
+			components are respectively equal).
+
+		--warnifusinggroupactivitiesininitialorder=WGA
+			WGA is either true or false, represents whether you want a message box to be shown, with a warning, if the input file contains nonstandard
+			timetable generation options to group activities in the initial order (default true).
+
+		--warnsubgroupswiththesameactivities=WSSA
+			WSSA is either true or false, represents whether you want a message box to be shown, with a warning, if your input file contains subgroups
+			which have the same activities (default true).
+
+		--printdetailedtimetables=PDT
+			PDT is either true or false, represents whether you want to show the detailed (true) or less detailed (false) years and groups timetables (default true).
+
+		--printdetailedteachersfreeperiodstimetables=PDTFP
+			PDTFP is either true or false, represents whether you want to show the detailed (true) or less detailed (false) teachers free periods
+			timetables (default true).
+
+		--exportcsv=ECSV
+			ECSV is either true or false, represents whether you want to export the CSV file and timetables (default false).
+
+		--overwritecsv=OCSV
+			OCSV is either true or false, represents whether you want to overwrite old CSV files, if they exist (default false).
+
+		--firstlineisheadingcsv=FLHCSV
+			FLHCSV is either true or false, represents whether you want the heading of the CSV files to be header (true) or data (false). The default
+			value is true.
+
+		--quotescsv=QCSV
+			QCSV is one value from the set [doublequotes|singlequotes|none] (write a single value from these three exactly as it is written here).
+			The default value is doublequotes.
+
+		--fieldseparatorcsv=FSCSV
+			FSCSV is one value from the set [comma|semicolon|verticalbar] (write a single value from these three exactly as it is written here).
+			The default value is comma.
+
+		--separatedaysnamelongnamebybreak=B1
+		--separatehoursnamelongnamebybreak=B2
+		--separatesubjectsnamelongnamecodebybreak=B3
+		--separateactivitytagsnamelongnamecodebybreak=B4
+		--separateteachersnamelongnamecodebybreak=B5
+		--separatestudentsnamelongnamecodebybreak=B6
+		--separatebuildingsnamelongnamecodebybreak=B7
+		--separateroomsnamelongnamecodebybreak=B8
+			B1 to B8 are either true or false (default false).
+
+		--printsubjectscomments=B1
+		--printactivitytagscomments=B2
+		--printteacherscomments=B3
+		--printsubgroupscomments=B4
+		--printgroupscomments=B5
+		--printyearscomments=B6
+		--printbuildingscomments=B7
+		--printroomscomments=B8
+			B1 to B8 are either true or false (default false).
+
+		--subgroupsdayshvprintdaysnames=B1
+		--subgroupsdayshvprintdayslongnames=B2
+		--subgroupsdayshvprinthoursnames=B3
+		--subgroupsdayshvprinthourslongnames=B4
+		--subgroupsdayshvprintsubjectsnames=B5
+		--subgroupsdayshvprintsubjectslongnames=B6
+		--subgroupsdayshvprintsubjectscodes=B7
+		--subgroupsdayshvprintactivitytagsnames=B8
+		--subgroupsdayshvprintactivitytagslongnames=B9
+		--subgroupsdayshvprintactivitytagscodes=B10
+		--subgroupsdayshvprintteachersnames=B11
+		--subgroupsdayshvprintteacherslongnames=B12
+		--subgroupsdayshvprintteacherscodes=B13
+		--subgroupsdayshvprintstudentsnames=B14
+		--subgroupsdayshvprintstudentslongnames=B15
+		--subgroupsdayshvprintstudentscodes=B16
+		--subgroupsdayshvprintroomsnames=B17
+		--subgroupsdayshvprintroomslongnames=B18
+		--subgroupsdayshvprintroomscodes=B19
+		--subgroupsdayshvprintsubjectslegend=B20
+		--subgroupsdayshvprintactivitytagslegend=B21
+		--subgroupsdayshvprintteacherslegend=B22
+		--subgroupsdayshvprintstudentslegend=B23
+		--subgroupsdayshvprintroomslegend=B24
+		--subgroupsdayshvprintlegendcodesfirst=B25
+			B1 to B25 are either true or false (B1, B3, B5, B8, B11, B14, B17 are by default true, the rest are by default false).
+			('hv' means 'horizontal and vertical'.)
+
+		--subgroupstimehvprintdaysnames=B1
+		--subgroupstimehvprintdayslongnames=B2
+		--subgroupstimehvprinthoursnames=B3
+		--subgroupstimehvprinthourslongnames=B4
+		--subgroupstimehvprintsubjectsnames=B5
+		--subgroupstimehvprintsubjectslongnames=B6
+		--subgroupstimehvprintsubjectscodes=B7
+		--subgroupstimehvprintactivitytagsnames=B8
+		--subgroupstimehvprintactivitytagslongnames=B9
+		--subgroupstimehvprintactivitytagscodes=B10
+		--subgroupstimehvprintteachersnames=B11
+		--subgroupstimehvprintteacherslongnames=B12
+		--subgroupstimehvprintteacherscodes=B13
+		--subgroupstimehvprintstudentsnames=B14
+		--subgroupstimehvprintstudentslongnames=B15
+		--subgroupstimehvprintstudentscodes=B16
+		--subgroupstimehvprintroomsnames=B17
+		--subgroupstimehvprintroomslongnames=B18
+		--subgroupstimehvprintroomscodes=B19
+		--subgroupstimehvprintsubjectslegend=B20
+		--subgroupstimehvprintactivitytagslegend=B21
+		--subgroupstimehvprintteacherslegend=B22
+		--subgroupstimehvprintstudentslegend=B23
+		--subgroupstimehvprintroomslegend=B24
+		--subgroupstimehvprintlegendcodesfirst=B25
+			B1 to B25 are either true or false (B1, B3, B5, B8, B11, B14, B17 are by default true, the rest are by default false).
+			('hv' means 'horizontal and vertical'.)
+
+		--groupsdayshvprintdaysnames=B1
+		--groupsdayshvprintdayslongnames=B2
+		--groupsdayshvprinthoursnames=B3
+		--groupsdayshvprinthourslongnames=B4
+		--groupsdayshvprintsubjectsnames=B5
+		--groupsdayshvprintsubjectslongnames=B6
+		--groupsdayshvprintsubjectscodes=B7
+		--groupsdayshvprintactivitytagsnames=B8
+		--groupsdayshvprintactivitytagslongnames=B9
+		--groupsdayshvprintactivitytagscodes=B10
+		--groupsdayshvprintteachersnames=B11
+		--groupsdayshvprintteacherslongnames=B12
+		--groupsdayshvprintteacherscodes=B13
+		--groupsdayshvprintstudentsnames=B14
+		--groupsdayshvprintstudentslongnames=B15
+		--groupsdayshvprintstudentscodes=B16
+		--groupsdayshvprintroomsnames=B17
+		--groupsdayshvprintroomslongnames=B18
+		--groupsdayshvprintroomscodes=B19
+		--groupsdayshvprintsubjectslegend=B20
+		--groupsdayshvprintactivitytagslegend=B21
+		--groupsdayshvprintteacherslegend=B22
+		--groupsdayshvprintstudentslegend=B23
+		--groupsdayshvprintroomslegend=B24
+		--groupsdayshvprintlegendcodesfirst=B25
+			B1 to B25 are either true or false (B1, B3, B5, B8, B11, B14, B17 are by default true, the rest are by default false).
+			('hv' means 'horizontal and vertical'.)
+
+		--groupstimehvprintdaysnames=B1
+		--groupstimehvprintdayslongnames=B2
+		--groupstimehvprinthoursnames=B3
+		--groupstimehvprinthourslongnames=B4
+		--groupstimehvprintsubjectsnames=B5
+		--groupstimehvprintsubjectslongnames=B6
+		--groupstimehvprintsubjectscodes=B7
+		--groupstimehvprintactivitytagsnames=B8
+		--groupstimehvprintactivitytagslongnames=B9
+		--groupstimehvprintactivitytagscodes=B10
+		--groupstimehvprintteachersnames=B11
+		--groupstimehvprintteacherslongnames=B12
+		--groupstimehvprintteacherscodes=B13
+		--groupstimehvprintstudentsnames=B14
+		--groupstimehvprintstudentslongnames=B15
+		--groupstimehvprintstudentscodes=B16
+		--groupstimehvprintroomsnames=B17
+		--groupstimehvprintroomslongnames=B18
+		--groupstimehvprintroomscodes=B19
+		--groupstimehvprintsubjectslegend=B20
+		--groupstimehvprintactivitytagslegend=B21
+		--groupstimehvprintteacherslegend=B22
+		--groupstimehvprintstudentslegend=B23
+		--groupstimehvprintroomslegend=B24
+		--groupstimehvprintlegendcodesfirst=B25
+			B1 to B25 are either true or false (B1, B3, B5, B8, B11, B14, B17 are by default true, the rest are by default false).
+			('hv' means 'horizontal and vertical'.)
+
+		--yearsdayshvprintdaysnames=B1
+		--yearsdayshvprintdayslongnames=B2
+		--yearsdayshvprinthoursnames=B3
+		--yearsdayshvprinthourslongnames=B4
+		--yearsdayshvprintsubjectsnames=B5
+		--yearsdayshvprintsubjectslongnames=B6
+		--yearsdayshvprintsubjectscodes=B7
+		--yearsdayshvprintactivitytagsnames=B8
+		--yearsdayshvprintactivitytagslongnames=B9
+		--yearsdayshvprintactivitytagscodes=B10
+		--yearsdayshvprintteachersnames=B11
+		--yearsdayshvprintteacherslongnames=B12
+		--yearsdayshvprintteacherscodes=B13
+		--yearsdayshvprintstudentsnames=B14
+		--yearsdayshvprintstudentslongnames=B15
+		--yearsdayshvprintstudentscodes=B16
+		--yearsdayshvprintroomsnames=B17
+		--yearsdayshvprintroomslongnames=B18
+		--yearsdayshvprintroomscodes=B19
+		--yearsdayshvprintsubjectslegend=B20
+		--yearsdayshvprintactivitytagslegend=B21
+		--yearsdayshvprintteacherslegend=B22
+		--yearsdayshvprintstudentslegend=B23
+		--yearsdayshvprintroomslegend=B24
+		--yearsdayshvprintlegendcodesfirst=B25
+			B1 to B25 are either true or false (B1, B3, B5, B8, B11, B14, B17 are by default true, the rest are by default false).
+			('hv' means 'horizontal and vertical'.)
+
+		--yearstimehvprintdaysnames=B1
+		--yearstimehvprintdayslongnames=B2
+		--yearstimehvprinthoursnames=B3
+		--yearstimehvprinthourslongnames=B4
+		--yearstimehvprintsubjectsnames=B5
+		--yearstimehvprintsubjectslongnames=B6
+		--yearstimehvprintsubjectscodes=B7
+		--yearstimehvprintactivitytagsnames=B8
+		--yearstimehvprintactivitytagslongnames=B9
+		--yearstimehvprintactivitytagscodes=B10
+		--yearstimehvprintteachersnames=B11
+		--yearstimehvprintteacherslongnames=B12
+		--yearstimehvprintteacherscodes=B13
+		--yearstimehvprintstudentsnames=B14
+		--yearstimehvprintstudentslongnames=B15
+		--yearstimehvprintstudentscodes=B16
+		--yearstimehvprintroomsnames=B17
+		--yearstimehvprintroomslongnames=B18
+		--yearstimehvprintroomscodes=B19
+		--yearstimehvprintsubjectslegend=B20
+		--yearstimehvprintactivitytagslegend=B21
+		--yearstimehvprintteacherslegend=B22
+		--yearstimehvprintstudentslegend=B23
+		--yearstimehvprintroomslegend=B24
+		--yearstimehvprintlegendcodesfirst=B25
+			B1 to B25 are either true or false (B1, B3, B5, B8, B11, B14, B17 are by default true, the rest are by default false).
+			('hv' means 'horizontal and vertical'.)
+
+		--teachersdayshvprintdaysnames=B1
+		--teachersdayshvprintdayslongnames=B2
+		--teachersdayshvprinthoursnames=B3
+		--teachersdayshvprinthourslongnames=B4
+		--teachersdayshvprintsubjectsnames=B5
+		--teachersdayshvprintsubjectslongnames=B6
+		--teachersdayshvprintsubjectscodes=B7
+		--teachersdayshvprintactivitytagsnames=B8
+		--teachersdayshvprintactivitytagslongnames=B9
+		--teachersdayshvprintactivitytagscodes=B10
+		--teachersdayshvprintteachersnames=B11
+		--teachersdayshvprintteacherslongnames=B12
+		--teachersdayshvprintteacherscodes=B13
+		--teachersdayshvprintstudentsnames=B14
+		--teachersdayshvprintstudentslongnames=B15
+		--teachersdayshvprintstudentscodes=B16
+		--teachersdayshvprintroomsnames=B17
+		--teachersdayshvprintroomslongnames=B18
+		--teachersdayshvprintroomscodes=B19
+		--teachersdayshvprintsubjectslegend=B20
+		--teachersdayshvprintactivitytagslegend=B21
+		--teachersdayshvprintteacherslegend=B22
+		--teachersdayshvprintstudentslegend=B23
+		--teachersdayshvprintroomslegend=B24
+		--teachersdayshvprintlegendcodesfirst=B25
+			B1 to B25 are either true or false (B1, B3, B5, B8, B11, B14, B17 are by default true, the rest are by default false).
+			('hv' means 'horizontal and vertical'.)
+
+		--teacherstimehvprintdaysnames=B1
+		--teacherstimehvprintdayslongnames=B2
+		--teacherstimehvprinthoursnames=B3
+		--teacherstimehvprinthourslongnames=B4
+		--teacherstimehvprintsubjectsnames=B5
+		--teacherstimehvprintsubjectslongnames=B6
+		--teacherstimehvprintsubjectscodes=B7
+		--teacherstimehvprintactivitytagsnames=B8
+		--teacherstimehvprintactivitytagslongnames=B9
+		--teacherstimehvprintactivitytagscodes=B10
+		--teacherstimehvprintteachersnames=B11
+		--teacherstimehvprintteacherslongnames=B12
+		--teacherstimehvprintteacherscodes=B13
+		--teacherstimehvprintstudentsnames=B14
+		--teacherstimehvprintstudentslongnames=B15
+		--teacherstimehvprintstudentscodes=B16
+		--teacherstimehvprintroomsnames=B17
+		--teacherstimehvprintroomslongnames=B18
+		--teacherstimehvprintroomscodes=B19
+		--teacherstimehvprintsubjectslegend=B20
+		--teacherstimehvprintactivitytagslegend=B21
+		--teacherstimehvprintteacherslegend=B22
+		--teacherstimehvprintstudentslegend=B23
+		--teacherstimehvprintroomslegend=B24
+		--teacherstimehvprintlegendcodesfirst=B25
+			B1 to B25 are either true or false (B1, B3, B5, B8, B11, B14, B17 are by default true, the rest are by default false).
+			('hv' means 'horizontal and vertical'.)
+
+		--roomsdayshvprintdaysnames=B1
+		--roomsdayshvprintdayslongnames=B2
+		--roomsdayshvprinthoursnames=B3
+		--roomsdayshvprinthourslongnames=B4
+		--roomsdayshvprintsubjectsnames=B5
+		--roomsdayshvprintsubjectslongnames=B6
+		--roomsdayshvprintsubjectscodes=B7
+		--roomsdayshvprintactivitytagsnames=B8
+		--roomsdayshvprintactivitytagslongnames=B9
+		--roomsdayshvprintactivitytagscodes=B10
+		--roomsdayshvprintteachersnames=B11
+		--roomsdayshvprintteacherslongnames=B12
+		--roomsdayshvprintteacherscodes=B13
+		--roomsdayshvprintstudentsnames=B14
+		--roomsdayshvprintstudentslongnames=B15
+		--roomsdayshvprintstudentscodes=B16
+		--roomsdayshvprintroomsnames=B17
+		--roomsdayshvprintroomslongnames=B18
+		--roomsdayshvprintroomscodes=B19
+		--roomsdayshvprintsubjectslegend=B20
+		--roomsdayshvprintactivitytagslegend=B21
+		--roomsdayshvprintteacherslegend=B22
+		--roomsdayshvprintstudentslegend=B23
+		--roomsdayshvprintroomslegend=B24
+		--roomsdayshvprintlegendcodesfirst=B25
+			B1 to B25 are either true or false (B1, B3, B5, B8, B11, B14, B17 are by default true, the rest are by default false).
+			('hv' means 'horizontal and vertical'.)
+
+		--roomstimehvprintdaysnames=B1
+		--roomstimehvprintdayslongnames=B2
+		--roomstimehvprinthoursnames=B3
+		--roomstimehvprinthourslongnames=B4
+		--roomstimehvprintsubjectsnames=B5
+		--roomstimehvprintsubjectslongnames=B6
+		--roomstimehvprintsubjectscodes=B7
+		--roomstimehvprintactivitytagsnames=B8
+		--roomstimehvprintactivitytagslongnames=B9
+		--roomstimehvprintactivitytagscodes=B10
+		--roomstimehvprintteachersnames=B11
+		--roomstimehvprintteacherslongnames=B12
+		--roomstimehvprintteacherscodes=B13
+		--roomstimehvprintstudentsnames=B14
+		--roomstimehvprintstudentslongnames=B15
+		--roomstimehvprintstudentscodes=B16
+		--roomstimehvprintroomsnames=B17
+		--roomstimehvprintroomslongnames=B18
+		--roomstimehvprintroomscodes=B19
+		--roomstimehvprintsubjectslegend=B20
+		--roomstimehvprintactivitytagslegend=B21
+		--roomstimehvprintteacherslegend=B22
+		--roomstimehvprintstudentslegend=B23
+		--roomstimehvprintroomslegend=B24
+		--roomstimehvprintlegendcodesfirst=B25
+			B1 to B25 are either true or false (B1, B3, B5, B8, B11, B14, B17 are by default true, the rest are by default false).
+			('hv' means 'horizontal and vertical'.)
+
+		--buildingsdayshvprintdaysnames=B1
+		--buildingsdayshvprintdayslongnames=B2
+		--buildingsdayshvprinthoursnames=B3
+		--buildingsdayshvprinthourslongnames=B4
+		--buildingsdayshvprintsubjectsnames=B5
+		--buildingsdayshvprintsubjectslongnames=B6
+		--buildingsdayshvprintsubjectscodes=B7
+		--buildingsdayshvprintactivitytagsnames=B8
+		--buildingsdayshvprintactivitytagslongnames=B9
+		--buildingsdayshvprintactivitytagscodes=B10
+		--buildingsdayshvprintteachersnames=B11
+		--buildingsdayshvprintteacherslongnames=B12
+		--buildingsdayshvprintteacherscodes=B13
+		--buildingsdayshvprintstudentsnames=B14
+		--buildingsdayshvprintstudentslongnames=B15
+		--buildingsdayshvprintstudentscodes=B16
+		--buildingsdayshvprintroomsnames=B17
+		--buildingsdayshvprintroomslongnames=B18
+		--buildingsdayshvprintroomscodes=B19
+		--buildingsdayshvprintsubjectslegend=B20
+		--buildingsdayshvprintactivitytagslegend=B21
+		--buildingsdayshvprintteacherslegend=B22
+		--buildingsdayshvprintstudentslegend=B23
+		--buildingsdayshvprintroomslegend=B24
+		--buildingsdayshvprintlegendcodesfirst=B25
+			B1 to B25 are either true or false (B1, B3, B5, B8, B11, B14, B17 are by default true, the rest are by default false).
+			('hv' means 'horizontal and vertical'.)
+
+		--buildingstimehvprintdaysnames=B1
+		--buildingstimehvprintdayslongnames=B2
+		--buildingstimehvprinthoursnames=B3
+		--buildingstimehvprinthourslongnames=B4
+		--buildingstimehvprintsubjectsnames=B5
+		--buildingstimehvprintsubjectslongnames=B6
+		--buildingstimehvprintsubjectscodes=B7
+		--buildingstimehvprintactivitytagsnames=B8
+		--buildingstimehvprintactivitytagslongnames=B9
+		--buildingstimehvprintactivitytagscodes=B10
+		--buildingstimehvprintteachersnames=B11
+		--buildingstimehvprintteacherslongnames=B12
+		--buildingstimehvprintteacherscodes=B13
+		--buildingstimehvprintstudentsnames=B14
+		--buildingstimehvprintstudentslongnames=B15
+		--buildingstimehvprintstudentscodes=B16
+		--buildingstimehvprintroomsnames=B17
+		--buildingstimehvprintroomslongnames=B18
+		--buildingstimehvprintroomscodes=B19
+		--buildingstimehvprintsubjectslegend=B20
+		--buildingstimehvprintactivitytagslegend=B21
+		--buildingstimehvprintteacherslegend=B22
+		--buildingstimehvprintstudentslegend=B23
+		--buildingstimehvprintroomslegend=B24
+		--buildingstimehvprintlegendcodesfirst=B25
+			B1 to B25 are either true or false (B1, B3, B5, B8, B11, B14, B17 are by default true, the rest are by default false).
+			('hv' means 'horizontal and vertical'.)
+
+		--subjectsdayshvprintdaysnames=B1
+		--subjectsdayshvprintdayslongnames=B2
+		--subjectsdayshvprinthoursnames=B3
+		--subjectsdayshvprinthourslongnames=B4
+		--subjectsdayshvprintsubjectsnames=B5
+		--subjectsdayshvprintsubjectslongnames=B6
+		--subjectsdayshvprintsubjectscodes=B7
+		--subjectsdayshvprintactivitytagsnames=B8
+		--subjectsdayshvprintactivitytagslongnames=B9
+		--subjectsdayshvprintactivitytagscodes=B10
+		--subjectsdayshvprintteachersnames=B11
+		--subjectsdayshvprintteacherslongnames=B12
+		--subjectsdayshvprintteacherscodes=B13
+		--subjectsdayshvprintstudentsnames=B14
+		--subjectsdayshvprintstudentslongnames=B15
+		--subjectsdayshvprintstudentscodes=B16
+		--subjectsdayshvprintroomsnames=B17
+		--subjectsdayshvprintroomslongnames=B18
+		--subjectsdayshvprintroomscodes=B19
+		--subjectsdayshvprintsubjectslegend=B20
+		--subjectsdayshvprintactivitytagslegend=B21
+		--subjectsdayshvprintteacherslegend=B22
+		--subjectsdayshvprintstudentslegend=B23
+		--subjectsdayshvprintroomslegend=B24
+		--subjectsdayshvprintlegendcodesfirst=B25
+			B1 to B25 are either true or false (B1, B3, B5, B8, B11, B14, B17 are by default true, the rest are by default false).
+			('hv' means 'horizontal and vertical'.)
+
+		--subjectstimehvprintdaysnames=B1
+		--subjectstimehvprintdayslongnames=B2
+		--subjectstimehvprinthoursnames=B3
+		--subjectstimehvprinthourslongnames=B4
+		--subjectstimehvprintsubjectsnames=B5
+		--subjectstimehvprintsubjectslongnames=B6
+		--subjectstimehvprintsubjectscodes=B7
+		--subjectstimehvprintactivitytagsnames=B8
+		--subjectstimehvprintactivitytagslongnames=B9
+		--subjectstimehvprintactivitytagscodes=B10
+		--subjectstimehvprintteachersnames=B11
+		--subjectstimehvprintteacherslongnames=B12
+		--subjectstimehvprintteacherscodes=B13
+		--subjectstimehvprintstudentsnames=B14
+		--subjectstimehvprintstudentslongnames=B15
+		--subjectstimehvprintstudentscodes=B16
+		--subjectstimehvprintroomsnames=B17
+		--subjectstimehvprintroomslongnames=B18
+		--subjectstimehvprintroomscodes=B19
+		--subjectstimehvprintsubjectslegend=B20
+		--subjectstimehvprintactivitytagslegend=B21
+		--subjectstimehvprintteacherslegend=B22
+		--subjectstimehvprintstudentslegend=B23
+		--subjectstimehvprintroomslegend=B24
+		--subjectstimehvprintlegendcodesfirst=B25
+			B1 to B25 are either true or false (B1, B3, B5, B8, B11, B14, B17 are by default true, the rest are by default false).
+			('hv' means 'horizontal and vertical'.)
+
+		--activitytagsdayshvprintdaysnames=B1
+		--activitytagsdayshvprintdayslongnames=B2
+		--activitytagsdayshvprinthoursnames=B3
+		--activitytagsdayshvprinthourslongnames=B4
+		--activitytagsdayshvprintsubjectsnames=B5
+		--activitytagsdayshvprintsubjectslongnames=B6
+		--activitytagsdayshvprintsubjectscodes=B7
+		--activitytagsdayshvprintactivitytagsnames=B8
+		--activitytagsdayshvprintactivitytagslongnames=B9
+		--activitytagsdayshvprintactivitytagscodes=B10
+		--activitytagsdayshvprintteachersnames=B11
+		--activitytagsdayshvprintteacherslongnames=B12
+		--activitytagsdayshvprintteacherscodes=B13
+		--activitytagsdayshvprintstudentsnames=B14
+		--activitytagsdayshvprintstudentslongnames=B15
+		--activitytagsdayshvprintstudentscodes=B16
+		--activitytagsdayshvprintroomsnames=B17
+		--activitytagsdayshvprintroomslongnames=B18
+		--activitytagsdayshvprintroomscodes=B19
+		--activitytagsdayshvprintsubjectslegend=B20
+		--activitytagsdayshvprintactivitytagslegend=B21
+		--activitytagsdayshvprintteacherslegend=B22
+		--activitytagsdayshvprintstudentslegend=B23
+		--activitytagsdayshvprintroomslegend=B24
+		--activitytagsdayshvprintlegendcodesfirst=B25
+			B1 to B25 are either true or false (B1, B3, B5, B8, B11, B14, B17 are by default true, the rest are by default false).
+			('hv' means 'horizontal and vertical'.)
+
+		--activitytagstimehvprintdaysnames=B1
+		--activitytagstimehvprintdayslongnames=B2
+		--activitytagstimehvprinthoursnames=B3
+		--activitytagstimehvprinthourslongnames=B4
+		--activitytagstimehvprintsubjectsnames=B5
+		--activitytagstimehvprintsubjectslongnames=B6
+		--activitytagstimehvprintsubjectscodes=B7
+		--activitytagstimehvprintactivitytagsnames=B8
+		--activitytagstimehvprintactivitytagslongnames=B9
+		--activitytagstimehvprintactivitytagscodes=B10
+		--activitytagstimehvprintteachersnames=B11
+		--activitytagstimehvprintteacherslongnames=B12
+		--activitytagstimehvprintteacherscodes=B13
+		--activitytagstimehvprintstudentsnames=B14
+		--activitytagstimehvprintstudentslongnames=B15
+		--activitytagstimehvprintstudentscodes=B16
+		--activitytagstimehvprintroomsnames=B17
+		--activitytagstimehvprintroomslongnames=B18
+		--activitytagstimehvprintroomscodes=B19
+		--activitytagstimehvprintsubjectslegend=B20
+		--activitytagstimehvprintactivitytagslegend=B21
+		--activitytagstimehvprintteacherslegend=B22
+		--activitytagstimehvprintstudentslegend=B23
+		--activitytagstimehvprintroomslegend=B24
+		--activitytagstimehvprintlegendcodesfirst=B25
+			B1 to B25 are either true or false (B1, B3, B5, B8, B11, B14, B17 are by default true, the rest are by default false).
+			('hv' means 'horizontal and vertical'.)
+
+		--activitiesdayshvprintdaysnames=B1
+		--activitiesdayshvprintdayslongnames=B2
+		--activitiesdayshvprinthoursnames=B3
+		--activitiesdayshvprinthourslongnames=B4
+		--activitiesdayshvprintsubjectsnames=B5
+		--activitiesdayshvprintsubjectslongnames=B6
+		--activitiesdayshvprintsubjectscodes=B7
+		--activitiesdayshvprintactivitytagsnames=B8
+		--activitiesdayshvprintactivitytagslongnames=B9
+		--activitiesdayshvprintactivitytagscodes=B10
+		--activitiesdayshvprintteachersnames=B11
+		--activitiesdayshvprintteacherslongnames=B12
+		--activitiesdayshvprintteacherscodes=B13
+		--activitiesdayshvprintstudentsnames=B14
+		--activitiesdayshvprintstudentslongnames=B15
+		--activitiesdayshvprintstudentscodes=B16
+		--activitiesdayshvprintroomsnames=B17
+		--activitiesdayshvprintroomslongnames=B18
+		--activitiesdayshvprintroomscodes=B19
+		--activitiesdayshvprintsubjectslegend=B20
+		--activitiesdayshvprintactivitytagslegend=B21
+		--activitiesdayshvprintteacherslegend=B22
+		--activitiesdayshvprintstudentslegend=B23
+		--activitiesdayshvprintroomslegend=B24
+		--activitiesdayshvprintlegendcodesfirst=B25
+			B1 to B25 are either true or false (B1, B3, B5, B8, B11, B14, B17 are by default true, the rest are by default false).
+			('hv' means 'horizontal and vertical'.)
+
+		--activitiestimehvprintdaysnames=B1
+		--activitiestimehvprintdayslongnames=B2
+		--activitiestimehvprinthoursnames=B3
+		--activitiestimehvprinthourslongnames=B4
+		--activitiestimehvprintsubjectsnames=B5
+		--activitiestimehvprintsubjectslongnames=B6
+		--activitiestimehvprintsubjectscodes=B7
+		--activitiestimehvprintactivitytagsnames=B8
+		--activitiestimehvprintactivitytagslongnames=B9
+		--activitiestimehvprintactivitytagscodes=B10
+		--activitiestimehvprintteachersnames=B11
+		--activitiestimehvprintteacherslongnames=B12
+		--activitiestimehvprintteacherscodes=B13
+		--activitiestimehvprintstudentsnames=B14
+		--activitiestimehvprintstudentslongnames=B15
+		--activitiestimehvprintstudentscodes=B16
+		--activitiestimehvprintroomsnames=B17
+		--activitiestimehvprintroomslongnames=B18
+		--activitiestimehvprintroomscodes=B19
+		--activitiestimehvprintsubjectslegend=B20
+		--activitiestimehvprintactivitytagslegend=B21
+		--activitiestimehvprintteacherslegend=B22
+		--activitiestimehvprintstudentslegend=B23
+		--activitiestimehvprintroomslegend=B24
+		--activitiestimehvprintlegendcodesfirst=B25
+			B1 to B25 are either true or false (B1, B3, B5, B8, B11, B14, B17 are by default true, the rest are by default false).
+			('hv' means 'horizontal and vertical'.)
+
+		--teachersfreeperiodsprintdaysnames=B1
+		--teachersfreeperiodsprintdayslongnames=B2
+		--teachersfreeperiodsprinthoursnames=B3
+		--teachersfreeperiodsprinthourslongnames=B4
+		--teachersfreeperiodsprintteachersnames=B5
+		--teachersfreeperiodsprintteacherslongnames=B6
+		--teachersfreeperiodsprintteacherscodes=B7
+			B1 to B7 are either true or false (B1, B3, B5 are by default true, the rest are by default false).
+
+		--statisticssprintteachersnames=B1
+		--statisticsprintteacherslongnames=B2
+		--statisticsprintteacherscodes=B3
+			B1 to B3 are either true or false (B1 is by default true, the rest are by default false).
+
+		--statisticssprintstudentsnames=B1
+		--statisticsprintstudentslongnames=B2
+		--statisticsprintstudentscodes=B3
+			B1 to B3 are either true or false (B1 is by default true, the rest are by default false).
+
+		--showvirtualrooms=SVR
+			SVR is either true or false, represents whether you want to show virtual rooms in the timetables (default false).
+
+		--warnifusingactivitiesnotfixedtimefixedspacevirtualroomsrealrooms=WANFTFS
+			WANFTFS is either true or false, represents whether you want the program to issue a warning if you are using activities which are not
+			fixed in time, but are fixed in space in a virtual room, specifying also the real rooms (which is not recommended) (default true).
+
+		--warnifusingmaxhoursdailywithlessthan100percentweight=WMHDWLT100PW
+			WMHDWLT100PW is either true or false, represents whether you want the program to issue a warning if you are using constraints of type
+			teacher(s)/students (set) max hours daily with a weight less than 100% (default true).
+
+		--verbose=VBS
+			VBS is either true or false, represents whether you want additional generation messages and other messages to be shown on the command
+			line (default false).
+
+	Run "fet-cl --help" to get usage information.
+
+	Run "fet-cl --version" to get version information.
+
+	You can ask the FET command line process to stop the timetable generation, by sending it the SIGTERM (or SIGBREAK, on Windows) signal. FET will then
+	write the current timetable and the highest stage timetable and exit. (If you send the FET command line the SIGINT signal it will stop immediately,
+	without writing the timetable.)
+
+	If you create a file named exactly 'sigwrite' in the root output directory, the program will try to remove this file and, if the file was
+	successfully removed, it will output the current and the highest stage timetables without stopping the generation (a poll for the existence of this
+	file is done once every second).
+
+	The potential warnings are logged in the file outputdir/logs/warnings.txt, and the potential errors are logged in the file outputdir/logs/errors.txt.
+
+	The result of the operation is logged in the file outputdir/logs/result.txt.
+
+	Also, you have in logs the initial order of activities and a list of maximum placed number of activities. If your timetable is impossible, say it stops
+	at maximum n placed activities, look at the n+1-st activity in the initial order, for it or its students/teachers may be the problem.
+
+	For the command line version, probably the most useful output to use internally in an application might be the activities_timetable.xml.
+	You have of course also the xml timetables for students and teachers and the nicely formatted HTML timetables to present directly.
+
+	You'll get a console output to help you with data, along with the files in the directory outputdir/logs/.
+	
+	If you are a programmer, in the file src/engine/messageboxes.cpp you'll find the implementation of the various messages. You
+	can modify these functions, catching them in your program. Also, you can catch the end of the program (successful or unsuccessful) in
+	the file src/interface/fet.cpp, in the command-line code part.
+	
+	If you want to be completely independent from Qt, using only standard C++, you can remove all the Qt includes and
+	reimplement the used Qt classes QString, QList, QSet, QHash, and maybe others (only the member functions which are necessary). Or just get
+	the corresponding code from Qt (Please review the Qt licensing options, in this case. Currently, they include GNU (L)GPL and commercial).
+	The program should have independence of a particular implementation of QSet and QHash so, if you reimplement these two containers,
+	any order of elements should lead to the same generation results. Contrary behavior should be reported as a bug.
+
+
+Languages (translations):
+
+	The translation files which the FET executable needs in order to be able to run in other languages are ending in .qm (like fet_**.qm)
+	and they are located in the "translations" directory in the FET distribution.
+
+	FET will search for translations (fet_**.qm files) in the following order:
+	1) directly in the directory where the fet executable is,
+	2) the directory "translations" in the directory where fet executable is,
+	3) the directory ../share/fet/translations (under systems that support it).
+
+	So, on:
+	Windows: if fet.exe is in C:\fet-v.v.v, fet will search for the file fet_**.qm in
+		C:\fet-v.v.v and then in C:\fet-v.v.v\translations
+	GNU/Linux: if the fet executable is in ~/fet-v.v.v, fet will search for the file fet_**.qm in
+		~/fet-v.v.v, then in ~/fet-v.v.v/translations and then in ../share/fet/translations
+	macOS: the operation is approximately similar to the one for GNU/Linux.
+		The difference is that it seems that the fet application on macOS contains in turn other directories (application directories),
+		so FET will search for the translations inside these application directories, not in the fet-v.v.v directory. The GNU/Linux style fet executable
+		seems to be located in fet-v.v.v/fet.app/Contents/MacOS, so FET will search for the file fet_**.qm in the directory
+		fet-v.v.v/fet.app/Contents/MacOS, then in the directory fet-v.v.v/fet.app/Contents/MacOS/translations,
+		then in the directory ../share/fet/translations.
+		Please see also the macOS note from the section "Running FET".
+		More notes for the macOS platform, from a user: copying the translations/ directory into the directory fet.app/Contents/MacOS/ is
+		possible from the command line in X11 xterm (but it is not possible with the finder program, because the file extension ".app" is
+		exclusive for applications, so the program finder interprets a directory with the extension ".app" as an application).
+
+	What to do if you get stuck with an unknown language: in each language, the submenu (Settings->)Language is translated also in English
+		(like: Limba/Language in Romanian). You can select the US English language (en_US abbreviation) and then close and restart FET (press the middle button
+		from the dialog that appears after trying to close FET, so that FET will exit without saving the current file).
+	Another solution: modify the FET settings on your operating system:
+		- Under GNU/Linux, and maybe macOS, usually in your $HOME/.config directory you'll find a directory "fet",
+		containing file "fettimetabling.conf". Edit that file - the line beginning with language, instead of language=... (for instance, language=ro),
+		make it language=en_US (case sensitive).
+		- Under Windows: run regedit.exe (Registry Editor), search key "fet". You will find a "fet" section with "fettimetabling" subsection.
+		Modify the value name language (from, for instance, ro, or other language) to have the value data en_US (5 characters, case sensitive).
+	Another solution: simply remove the translation files (or move them so they are not available to the fet executable) and start FET. It will report
+		that the custom language is not found and it will revert to en_US.
+
+
+Documentation:
+
+	Some hints in the directory "fet-v.v.v/doc/" (under GNU/Linux or macOS, they may be found in usr/share/doc/fet/ directory).
+	Some other hints in the program Help menu.
+	You may find more documentation on the FET homepage.
+
+
+Input files:
+
+	You can open a few sample input files in the "fet-v.v.v/examples/" directory
+	(under GNU/Linux or macOS, they may be found in /usr/local/share/fet/examples/)
+
+
+Uninstalling FET:
+
+	GNU/Linux, and maybe macOS: type "make uninstall" with root permissions. Then,
+
+	GNU/Linux and Windows:
+	Remove the directory fet-v.v.v. Also, you may want to remove the directory with the fet results (default: $HOME/fet-results).
+	This will leave the settings of FET on your system. FET stores its settings in your operating system's dedicated section.
+	If you really want to remove everything that FET created, please read below.
+
+	To completely remove stored FET settings from your operating system:
+
+	GNU/Linux:
+	Usually, in your $HOME/.config directory you will find a directory "fet" containing the file "fettimetabling.conf".
+	Remove the directory "fet" and its contents.
+
+	macOS: It seems that the configuration file might be: $HOME/Library/Preferences/com.fet.fettimetabling.plist
+
+	Windows:
+	Run regedit.exe (Registry Editor), search for the key "fet". You will find a section "fet" with the subsection "fettimetabling".
+	Remove the "fet" section and its contents.
+
+
+Feedback / help:
+
+	You are encouraged to express your opinion about this program, to send your data files, for the purpose of testing or
+	for inclusion into examples, and also to report possible bugs and suggestions. See the FET homepage for contact information.
+
+
+Copyright (C) 2002-2026 Liviu Lalescu, Volker Dirr.
