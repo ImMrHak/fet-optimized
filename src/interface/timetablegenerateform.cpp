@@ -52,6 +52,13 @@
 
 #include <QFont>
 
+#include <QComboBox>
+#include <QLabel>
+#include <QHBoxLayout>
+#include <QTimer>
+#include <QSettings>
+#include <QMetaObject>
+
 #include "longtextmessagebox.h"
 
 #include <thread>
@@ -84,6 +91,12 @@ extern QString conflictsStringTitle;
 extern QString conflictsString;
 
 Generate gen;
+
+//the timetable found by the several-searches engines
+static Solution parallelSolution;
+
+extern const QString COMPANY;
+extern const QString PROGRAM;
 
 extern QString initialOrderOfActivities;
 
@@ -158,11 +171,40 @@ TimetableGenerateForm::TimetableGenerateForm(QWidget* parent): QDialog(parent)
 	connect(&gen, &Generate::activityPlaced, this, &TimetableGenerateForm::activityPlaced);
 	connect(&gen, &Generate::generationFinished, this, &TimetableGenerateForm::generationFinished);
 	connect(&gen, &Generate::impossibleToSolve, this, &TimetableGenerateForm::impossibleToSolve);
+
+	//engine choice, next to the "Current stage" label
+	parallelMode=false;
+	parallelAbort=false;
+	parallelOutcome=ParallelGenerate::Failed;
+	engineComboBox=new QComboBox(this);
+	int nCores=ParallelGenerate::defaultCpuSearches();
+	engineComboBox->addItem(tr("CPU - classic (one search)"));
+	engineComboBox->addItem(tr("CPU - all cores (%1 searches at once)").arg(nCores));
+	engineComboBox->addItem(tr("GPU (OpenCL graphics card)"));
+	engineComboBox->addItem(tr("GPU + CPU cores (%1 searches at once)").arg(qMax(1, nCores-1)+1));
+	engineComboBox->setToolTip(tr("Classic is the original FET engine. The other engines run several searches at the same time "
+	 "and keep the first timetable that respects all compulsory constraints; they cannot be paused and do not write partial timetables when stopped."));
+	QSettings settings(COMPANY, PROGRAM);
+	engineComboBox->setCurrentIndex(qBound(0, settings.value(this->metaObject()->className()+QString("/engine"), 0).toInt(), 3));
+	QHBoxLayout* engineLayout=new QHBoxLayout();
+	engineLayout->addStretch();
+	engineLayout->addWidget(new QLabel(tr("Engine:"), this));
+	engineLayout->addWidget(engineComboBox);
+	gridLayout_3->addLayout(engineLayout, 0, 1);
+
+	progressTimer=new QTimer(this);
+	connect(progressTimer, &QTimer::timeout, this, &TimetableGenerateForm::parallelProgress);
 }
 
 TimetableGenerateForm::~TimetableGenerateForm()
 {
+	QSettings settings(COMPANY, PROGRAM);
+	settings.setValue(this->metaObject()->className()+QString("/engine"), engineComboBox->currentIndex());
 	saveFETDialogGeometry(this);
+	if(parallelThread.joinable()){
+		parallelAbort=true;
+		parallelThread.join();
+	}
 	if(generation_running)
 		this->stop();
 		
@@ -256,10 +298,16 @@ void TimetableGenerateForm::start(){
 	///////////
 
 	gen.c.makeUnallocated(gt.rules);
-	
+
 	CURRENT_OUTPUT_DIRECTORY=initialOutputDirectory;
-	
+
 	TimetableExport::writeRandomSeed(this, gen.rng, true); //true represents 'before' state
+
+	parallelMode=(engineComboBox->currentIndex()>0);
+	if(parallelMode){
+		startParallel(engineComboBox->currentIndex());
+		return;
+	}
 
 	//generateThread.start();
 	/*singleThread=std::thread(runSingle);
@@ -269,6 +317,11 @@ void TimetableGenerateForm::start(){
 
 void TimetableGenerateForm::stop()
 {
+	if(parallelMode){
+		stopParallel();
+		return;
+	}
+
 	if(!generation_running){
 		return;
 	}
@@ -475,14 +528,34 @@ void TimetableGenerateForm::stopHighest()
 
 	generation_running=false;
 
-	//gen.myMutex.lock();
-	gen.abortOptimization=true;
-	//gen.myMutex.unlock();
-	
-	//QCoreApplication::sendPostedEvents();
-	gen.semaphorePlacedActivity.release();
+	if(parallelMode){
+		parallelAbort=true;
+		if(parallelThread.joinable())
+			parallelThread.join();
+		progressTimer->stop();
+		parallelProgress();
+		if(parallelOutcome==ParallelGenerate::Success){
+			//a timetable was found just before the click
+			generation_running=true;
+			parallelFinished();
+			return;
+		}
+		if(!takeParallelHighest()){
+			currentResultsTextEdit->setPlainText(TimetableGenerateForm::tr("Generation stopped"));
+			resetButtons();
+			return;
+		}
+	}
+	else{
+		//gen.myMutex.lock();
+		gen.abortOptimization=true;
+		//gen.myMutex.unlock();
 
-	gen.semaphoreFinished.acquire();
+		//QCoreApplication::sendPostedEvents();
+		gen.semaphorePlacedActivity.release();
+
+		gen.semaphoreFinished.acquire();
+	}
 
 	//gen.semaphorePlacedActivity.tryAcquire();
 
@@ -637,6 +710,8 @@ void TimetableGenerateForm::stopHighest()
 	writeResultsPushButton->setDisabled(true);
 	writeHighestStagePushButton->setDisabled(true);
 	seeImpossiblePushButton->setDisabled(true);
+	if(parallelMode)
+		resetButtons();
 
 	//generateThread.quit();
 	//generateThread.wait();
@@ -860,6 +935,12 @@ void TimetableGenerateForm::generationFinished()
 
 	//gen.myMutex.lock();
 
+	showResults(QString());
+}
+
+//write and show the timetable in gen.c; engineMessage says which of several searches found it
+void TimetableGenerateForm::showResults(const QString& engineMessage)
+{
 	CURRENT_OUTPUT_DIRECTORY=initialOutputDirectory;
 
 	TimetableExport::writeRandomSeed(this, gen.rng, false); //false represents 'before' state
@@ -911,6 +992,10 @@ void TimetableGenerateForm::generationFinished()
 
 	QString s=QString("");
 	s+=tr("Generation successful!");
+	if(!engineMessage.isEmpty()){
+		s+=QString("\n");
+		s+=tr("The timetable was %1.", "%1 is a description such as: found by CPU search 3 of 12 in 2.5 s").arg(engineMessage);
+	}
 	s+=QString("\n\n");
 	s+=tr("Number of broken soft constraints: %1").arg(c.conflictsWeightList.count());
 	s+=QString("\n");
@@ -984,6 +1069,193 @@ void TimetableGenerateForm::generationFinished()
 	//generateThread.wait();
 	//if(singleThread.joinable())
 	//	singleThread.join();
+	engineComboBox->setEnabled(true);
+}
+
+void TimetableGenerateForm::resetButtons()
+{
+	if(!stopButtonText.isEmpty())
+		stopPushButton->setText(stopButtonText);
+	pausedLabel->setVisible(false);
+	startPushButton->setEnabled(true);
+	stopPushButton->setDisabled(true);
+	pausePushButton->setDisabled(true);
+	stopHighestPushButton->setDisabled(true);
+	closePushButton->setEnabled(true);
+	writeResultsPushButton->setDisabled(true);
+	writeHighestStagePushButton->setDisabled(true);
+	seeImpossiblePushButton->setDisabled(true);
+	seeInitialOrderPushButton->setDisabled(true);
+	engineComboBox->setEnabled(true);
+}
+
+static QString progressText(int na, int t, int mact, int seconds);
+
+void TimetableGenerateForm::startParallel(int engineIndex)
+{
+	int nCores=ParallelGenerate::defaultCpuSearches();
+	parallelOptions=ParallelGenerate::Options();
+	parallelOptions.cpuSearches=(engineIndex==1) ? nCores : ((engineIndex==3) ? qMax(1, nCores-1) : 0);
+	parallelOptions.gpu=(engineIndex>=2);
+	parallelAbort=false;
+	parallelMessage.clear();
+
+	parallelProgressData.placed=0;
+	parallelProgressData.maxPlaced=0;
+	parallelProgressData.maxPlacedSeconds=0;
+
+	//no Pause; the highest stage comes from the CPU searches (the GPU search has none)
+	const bool highest=(parallelOptions.cpuSearches>0);
+	stopButtonText=stopPushButton->text();
+	stopPushButton->setText(TimetableGenerateForm::tr("Stop"));
+	startPushButton->setDisabled(true);
+	stopPushButton->setEnabled(true);
+	pausePushButton->setDisabled(true);
+	stopHighestPushButton->setEnabled(highest);
+	closePushButton->setDisabled(true);
+	writeResultsPushButton->setDisabled(true);
+	writeHighestStagePushButton->setEnabled(highest);
+	seeImpossiblePushButton->setDisabled(true);
+	seeInitialOrderPushButton->setEnabled(true);
+	engineComboBox->setDisabled(true);
+	generation_running=true;
+
+	parallelClock.start();
+	parallelProgress();
+	progressTimer->start(250);
+	if(parallelThread.joinable())
+		parallelThread.join();
+	parallelThread=std::thread([this](){
+		parallelOutcome=ParallelGenerate::run(parallelOptions, gen.rng, parallelSolution, parallelMessage, &parallelAbort, &parallelProgressData);
+		QMetaObject::invokeMethod(this, "parallelFinished", Qt::QueuedConnection);
+	});
+}
+
+void TimetableGenerateForm::stopParallel()
+{
+	if(!generation_running)
+		return;
+	generation_running=false;
+	parallelAbort=true;
+	if(parallelThread.joinable())
+		parallelThread.join();
+	progressTimer->stop();
+	currentResultsTextEdit->setPlainText(TimetableGenerateForm::tr("Generation stopped"));
+	resetButtons();
+}
+
+//put the furthest partial timetable of the CPU searches where the classic highest-stage code reads it
+bool TimetableGenerateForm::takeParallelHighest()
+{
+	std::lock_guard<std::mutex> lock(parallelProgressData.highestMutex);
+	if(parallelProgressData.maxPlaced<=0)
+		return false;
+	gen.highestStageSolution.copy(gt.rules, parallelProgressData.highest);
+	gen.maxActivitiesPlaced=parallelProgressData.maxPlaced;
+	return true;
+}
+
+void TimetableGenerateForm::parallelProgress()
+{
+	QString s;
+	if(parallelOptions.cpuSearches>0 && parallelOptions.gpu)
+		s=TimetableGenerateForm::tr("Running %1 CPU searches and the GPU search at the same time").arg(parallelOptions.cpuSearches);
+	else if(parallelOptions.gpu)
+		s=TimetableGenerateForm::tr("Running the GPU search");
+	else
+		s=TimetableGenerateForm::tr("Running %1 CPU searches at the same time").arg(parallelOptions.cpuSearches);
+	if(parallelOptions.cpuSearches>0){
+		s.prepend(progressText(parallelProgressData.placed, int(parallelClock.elapsed()/1000),
+		 parallelProgressData.maxPlaced, parallelProgressData.maxPlacedSeconds)+"\n\n");
+	}
+	else{
+		s+="\n";
+		s+=TimetableGenerateForm::tr("Elapsed time: %1 s").arg(parallelClock.elapsed()/1000);
+	}
+	currentResultsTextEdit->setPlainText(s);
+}
+
+void TimetableGenerateForm::parallelFinished()
+{
+	if(parallelThread.joinable())
+		parallelThread.join();
+	progressTimer->stop();
+	if(!generation_running) //stopped by the user
+		return;
+	generation_running=false;
+
+	if(parallelOutcome==ParallelGenerate::Success){
+		gen.c.copy(gt.rules, parallelSolution);
+		stopPushButton->setText(stopButtonText);
+		currentResultsTextEdit->setPlainText(TimetableGenerateForm::tr("Generation successful"));
+		showResults(parallelMessage);
+		return;
+	}
+
+	QString s;
+	if(parallelOutcome==ParallelGenerate::Impossible)
+		s=TimetableGenerateForm::tr("The timetable is impossible to generate.");
+	else
+		s=TimetableGenerateForm::tr("No timetable was found.");
+	s+="\n\n";
+	s+=parallelMessage;
+	if(parallelOutcome==ParallelGenerate::Impossible)
+		s+="\n\n"+TimetableGenerateForm::tr("Use the classic CPU engine to see which activities are difficult to place.");
+	currentResultsTextEdit->setPlainText(s);
+	QMessageBox::warning(this, TimetableGenerateForm::tr("FET information"), s);
+	resetButtons();
+}
+
+//the progress text of the classic engine: t is the elapsed time, mact the max placed activities, reached at 'seconds'
+static QString progressText(int na, int t, int mact, int seconds)
+{
+	QString s;
+	s+=TimetableGenerateForm::tr("%1 out of %2 activities placed").arg(na).arg(gt.rules.nInternalActivities)+"\n";
+
+	s+=TimetableGenerateForm::tr("Elapsed time:");
+	int h=t/3600;
+	if(h>0){
+		s+=" ";
+		s+=TimetableGenerateForm::tr("%1 h", "hours").arg(h);
+	}
+	t=t%3600;
+	int m=t/60;
+	if(m>0){
+		s+=" ";
+		s+=TimetableGenerateForm::tr("%1 m", "minutes").arg(m);
+	}
+	t=t%60;
+	if(t>0){
+		s+=" ";
+		s+=TimetableGenerateForm::tr("%1 s", "seconds").arg(t);
+	}
+
+	bool zero=false;
+	if(seconds==0)
+		zero=true;
+	int hh=seconds/3600;
+	seconds%=3600;
+	int mm=seconds/60;
+	seconds%=60;
+	int ss=seconds;
+
+	QString tim;
+	if(hh>0){
+		tim+=" ";
+		tim+=TimetableGenerateForm::tr("%1 h", "hours").arg(hh);
+	}
+	if(mm>0){
+		tim+=" ";
+		tim+=TimetableGenerateForm::tr("%1 m", "minutes").arg(mm);
+	}
+	if(ss>0 || zero){
+		tim+=" ";
+		tim+=TimetableGenerateForm::tr("%1 s", "seconds").arg(ss);
+	}
+	tim.remove(0, 1);
+	s+="\n\n";
+	s+=TimetableGenerateForm::tr("Max placed activities: %1 (at %2)", "%1 represents the maximum number of activities placed, %2 is a time interval").arg(mact).arg(tim);
+	return s;
 }
 
 void TimetableGenerateForm::activityPlaced(int nThread, int na){
@@ -1005,52 +1277,7 @@ void TimetableGenerateForm::activityPlaced(int nThread, int na){
 	//gen.cvForPlacedActivity.notify_one();
 
 	//write to the Qt interface
-	QString s;
-	s+=TimetableGenerateForm::tr("%1 out of %2 activities placed").arg(na).arg(gt.rules.nInternalActivities)+"\n";
-
-	s+=TimetableGenerateForm::tr("Elapsed time:");
-	int h=t/3600;
-	if(h>0){
-		s+=" ";
-		s+=TimetableGenerateForm::tr("%1 h", "hours").arg(h);
-	}
-	t=t%3600;
-	int m=t/60;
-	if(m>0){
-		s+=" ";
-		s+=TimetableGenerateForm::tr("%1 m", "minutes").arg(m);
-	}
-	t=t%60;
-	if(t>0){
-		s+=" ";
-		s+=TimetableGenerateForm::tr("%1 s", "seconds").arg(t);
-	}
-	
-	bool zero=false;
-	if(seconds==0)
-		zero=true;
-	int hh=seconds/3600;
-	seconds%=3600;
-	int mm=seconds/60;
-	seconds%=60;
-	int ss=seconds;
-
-	QString tim;
-	if(hh>0){
-		tim+=" ";
-		tim+=tr("%1 h", "hours").arg(hh);
-	}
-	if(mm>0){
-		tim+=" ";
-		tim+=tr("%1 m", "minutes").arg(mm);
-	}
-	if(ss>0 || zero){
-		tim+=" ";
-		tim+=tr("%1 s", "seconds").arg(ss);
-	}
-	tim.remove(0, 1);
-	s+="\n\n";
-	s+=tr("Max placed activities: %1 (at %2)", "%1 represents the maximum number of activities placed, %2 is a time interval").arg(mact).arg(tim);
+	QString s=progressText(na, t, mact, seconds);
 
 	//if(gen.paused)
 	//	s.prepend(tr("[PAUSED]", "Generation is paused")+QString("\n"));
@@ -1176,6 +1403,11 @@ void TimetableGenerateForm::write(){
 void TimetableGenerateForm::writeHighestStage(){
 	if(gen.paused) //should not happen
 		assert(0);
+
+	if(parallelMode && !takeParallelHighest()){
+		QMessageBox::information(this, TimetableGenerateForm::tr("FET information"), TimetableGenerateForm::tr("No activity was placed yet."));
+		return;
+	}
 
 	gen.myMutex.lock();
 

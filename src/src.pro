@@ -409,6 +409,7 @@ DEFINES += \
 	QT_STRICT_ITERATORS
 
 CONFIG += release warn_on c++17 no_keywords
+include(fet_speed.pri)
 
 QT += network widgets
 !isEmpty(QT.printsupport.name): QT += printsupport

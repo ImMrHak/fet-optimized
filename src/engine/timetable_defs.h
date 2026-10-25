@@ -21,8 +21,16 @@ File timetable_defs.h
 #ifndef TIMETABLE_DEFS_H
 #define TIMETABLE_DEFS_H
 
+//FET keeps assert() on in release builds to catch bugs. Build with qmake "CONFIG+=fet_fast" (CMake: -DFET_FAST=ON)
+//to turn the checks off for speed; a finished timetable is still verified against all 100% constraints.
+#ifndef FET_NO_ASSERTS
 #ifdef NDEBUG
 #undef NDEBUG
+#endif
+#else
+#ifndef NDEBUG
+#define NDEBUG
+#endif
 #endif
 #include <cassert>
 

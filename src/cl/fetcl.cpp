@@ -18,6 +18,9 @@ File fetcl.cpp - this is where FET-CL starts
  *                                                                         *
  ***************************************************************************/
 
+#include "gpusolver.h"
+#include "parallelgenerate.h"
+
 #include "fetcl.h"
 
 #include "matrix.h"
@@ -925,6 +928,22 @@ void usage(QTextStream* out, const QString& error)
 		"\t--warnifusingmaxhoursdailywithlessthan100percentweight=WMHDWLT100PW\n"
 		"\t\tWMHDWLT100PW is either true or false, represents whether you want the program to issue a warning if you are using constraints of type teacher(s)/students (set) "
 		"max hours daily with a weight less than 100% (default true).\n"
+		"\n"
+		"\t--engine=ENG\n"
+		"\t\tENG is cpu, gpu or combined (default cpu). cpu is the classic FET engine. gpu searches on the graphics card with OpenCL "
+		"(official mode only, and not all constraint types are supported; the result is always checked against all 100% constraints). "
+		"combined runs CPU searches and the GPU search at the same time and keeps the first valid timetable.\n"
+		"\n"
+		"\t--workers=NW\n"
+		"\t\tNW is the number of CPU searches run at the same time on separate threads, each with its own random seed "
+		"(default 1 with --engine=cpu, one per processor core with --engine=combined; 0 means one per processor core). The first valid timetable is kept and its random seeds are printed. "
+		"With more than one search, no partial timetable is written if the time limit is reached.\n"
+		"\n"
+		"\t--gpudevice=GD --gpuchains=GC\n"
+		"\t\tGD is the number of the OpenCL device to use (default 0, see --listgpus); GC is the number of parallel GPU searches (default 0 = automatic).\n"
+		"\n"
+		"\t--listgpus\n"
+		"\t\tprints the usable OpenCL devices and exits.\n"
 		"\n"
 		"\t--verbose=VBS\n"
 		"\t\tVBS is either true or false, represents whether you want additional generation messages and other messages to be shown on the command line (default false).\n"
@@ -1981,6 +2000,12 @@ int main(int argc, char **argv)
 		EXPORT_FIELD_SEPARATOR=EXPORT_COMMA;
 
 		bool showVersion=false;
+
+		QString engine="cpu";
+		int nWorkers=-1; //-1: not given
+		int gpuDevice=0;
+		int gpuChains=0;
+		bool listGpus=false;
 		
 		for(int i=1; i<_args.count(); i++){
 			QString s=_args[i];
@@ -4327,8 +4352,28 @@ int main(int argc, char **argv)
 					SETTINGS_TIMETABLES_STATISTICS_PRINT_STUDENTS_CODES=true;
 			}
 			///////2026-03-11 end
+			else if(s.startsWith("--engine="))
+				engine=s.mid(9).toLower();
+			else if(s.startsWith("--workers="))
+				nWorkers=s.mid(10).toInt();
+			else if(s.startsWith("--gpudevice="))
+				gpuDevice=s.mid(12).toInt();
+			else if(s.startsWith("--gpuchains="))
+				gpuChains=s.mid(12).toInt();
+			else if(s=="--listgpus")
+				listGpus=true;
 			else
 				unrecognizedOptions.append(s);
+		}
+
+		if(listGpus){
+			QString error;
+			QStringList devs=GpuSolver::devices(&error);
+			if(devs.isEmpty())
+				std::cout<<"No usable OpenCL device: "<<qPrintable(error)<<std::endl;
+			for(int i=0; i<devs.count(); i++)
+				std::cout<<i<<": "<<qPrintable(devs.at(i))<<std::endl;
+			return 0;
 		}
 		
 		if(filename==""){
@@ -4792,13 +4837,67 @@ int main(int argc, char **argv)
 		
 		TimetableExport::writeRandomSeedCommandLine(nullptr, gen.rng, outputDirectory, true); //true represents 'before' state
 
-		gen.generate(secondsLimit, restarted, impossible, timeExceeded, false, true, &maxPlacedActivityStream); //false means not threaded, true means command line
+		if(engine!="cpu" && engine!="gpu" && engine!="combined"){
+			usage(&out, QString("Unknown engine %1").arg(engine));
+			logFile.close();
+			return 1;
+		}
+		//classic: the original single CPU search, with partial timetables when the time limit is reached
+		const bool classicEngine=(engine=="cpu" && (nWorkers==1 || nWorkers==-1));
+		QString engineMessage;
+		bool engineUnusable=false;
+		if(classicEngine){
+			gen.generate(secondsLimit, restarted, impossible, timeExceeded, false, true, &maxPlacedActivityStream); //false means not threaded, true means command line
+		}
+		else{
+			restarted=false;
+			impossible=false;
+			timeExceeded=false;
+			if(engine=="gpu"){
+				GpuSolver::Result gr=GpuSolver::solve(secondsLimit, gpuDevice, gpuChains, gen.rng.uiMRG32k3a(), gen.c, engineMessage, &gen.abortOptimization);
+				std::cout<<"GPU engine: "<<qPrintable(engineMessage)<<std::endl;
+				out<<"GPU engine: "<<engineMessage<<Qt::endl;
+				impossible=(gr==GpuSolver::Impossible);
+				timeExceeded=(gr==GpuSolver::TimeExceeded);
+				engineUnusable=(gr==GpuSolver::NotAvailable || gr==GpuSolver::Unsupported);
+			}
+			else{
+				ParallelGenerate::Options po;
+				po.gpu=(engine=="combined");
+				po.cpuSearches=(nWorkers>0) ? nWorkers : qMax(1, ParallelGenerate::defaultCpuSearches()-(po.gpu ? 1 : 0));
+				po.gpuDevice=gpuDevice;
+				po.gpuChains=gpuChains;
+				po.maxSeconds=secondsLimit;
+				std::cout<<"Running "<<po.cpuSearches<<" CPU search(es)"<<(po.gpu ? " and the GPU search" : "")<<" at the same time"<<std::endl;
+				ParallelGenerate::Outcome pr=ParallelGenerate::run(po, gen.rng, gen.c, engineMessage, &gen.abortOptimization);
+				std::cout<<"Parallel engine: "<<qPrintable(engineMessage)<<std::endl;
+				out<<"Parallel engine: "<<engineMessage<<Qt::endl;
+				impossible=(pr==ParallelGenerate::Impossible);
+				timeExceeded=(pr==ParallelGenerate::TimeExceeded);
+				engineUnusable=(pr==ParallelGenerate::Failed);
+			}
+		}
 
 		//run.store(false);
 		//pollFileThread.join();
 		
 		maxPlacedActivityFile.close();
-	
+
+		if(engineUnusable){
+			std::cout<<"The selected engine cannot be used for this file. Try --engine=cpu"<<std::endl;
+			out<<"The selected engine cannot be used for this file. Try --engine=cpu"<<Qt::endl;
+			logFile.close();
+			return 1;
+		}
+		if(!classicEngine && (impossible || timeExceeded || gen.abortOptimization)){
+			//the GPU and parallel engines have no partial timetables to write
+			QString s=impossible ? QString("Impossible") : (timeExceeded ? QString("Time exceeded") : QString("Generation stopped"));
+			std::cout<<qPrintable(s)<<std::endl;
+			out<<s<<Qt::endl;
+			logFile.close();
+			return 0;
+		}
+
 		if(impossible){
 			std::cout<<"Impossible"<<std::endl;
 			out<<"Impossible"<<Qt::endl;

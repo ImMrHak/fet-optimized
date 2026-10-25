@@ -26,6 +26,15 @@
 
 //#include <QProcess>
 #include <QList>
+#include <QElapsedTimer>
+
+#include <atomic>
+#include <thread>
+
+#include "parallelgenerate.h"
+
+class QComboBox;
+class QTimer;
 
 /*class GenerateThread: public QThread{
 	Q_OBJECT
@@ -73,8 +82,31 @@ private Q_SLOTS:
 	void seeInitialOrder();
 	
 	void pause();
-	
+
 //	void seeHighestStage();
+
+	void parallelFinished();
+	void parallelProgress();
+
+private:
+	//engine choice: 0 classic CPU, 1 all CPU cores, 2 GPU, 3 GPU + CPU cores
+	QComboBox* engineComboBox;
+	QTimer* progressTimer;
+	QElapsedTimer parallelClock;
+	bool parallelMode;
+	ParallelGenerate::Options parallelOptions;
+	std::thread parallelThread;
+	std::atomic<bool> parallelAbort;
+	ParallelGenerate::Outcome parallelOutcome;
+	QString parallelMessage;
+	ParallelGenerate::Progress parallelProgressData;
+	QString stopButtonText; //its classic label, restored after a run with several searches
+
+	void startParallel(int engineIndex);
+	void stopParallel();
+	bool takeParallelHighest();
+	void showResults(const QString& engineMessage);
+	void resetButtons();
 };
 
 #endif

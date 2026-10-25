@@ -27,6 +27,7 @@ File solution.cpp
 #include "solution.h"
 #include "rules.h"
 #include "timeconstraint.h"
+#include "spaceconstraint.h"
 
 #include "matrix.h"
 
@@ -597,4 +598,58 @@ void Solution::getBuildingsTimetable(
 			for(k=0; k<r.nHoursPerDay; k++)
 				if(a[i][j][k].isEmpty())
 					a[i][j][k].append(UNALLOCATED_ACTIVITY);
+}
+
+std::mutex constraintCheckMutex;
+
+int Solution::brokenHardConstraints(Rules& r, QString* firstBroken)
+{
+	assert(r.initialized && r.internalStructureComputed);
+	std::lock_guard<std::mutex> lock(constraintCheckMutex);
+
+	//same cache reset as fitness(), so the constraints rebuild their matrices from this->times/rooms
+	changedForMatrixCalculationTeachers=true;
+	changedForMatrixCalculationStudents=true;
+	changedForMatrixCalculationRooms=true;
+	teachersMatrixReady=false;
+	subgroupsMatrixReady=false;
+	roomsMatrixReady=false;
+	//The checkers only count conflicts when given a report string, and assert when a complete
+	//timetable breaks a 100% constraint, so give them one and mark the timetable as incomplete.
+	int savedNPlaced=nPlacedActivities;
+	nPlacedActivities=-1;
+	FakeString report;
+
+	int broken=0;
+	QList<double> cl;
+	QList<QString> dl;
+	for(int i=0; i<r.nInternalTimeConstraints; i++){
+		TimeConstraint* ctr=r.internalTimeConstraintsList[i];
+		if(ctr->weightPercentage<100.0)
+			continue;
+		cl.clear(); dl.clear();
+		if(ctr->fitness(*this, r, cl, dl, &report)>0){
+			if(broken==0 && firstBroken!=nullptr)
+				*firstBroken=ctr->getDetailedDescription(r);
+			broken++;
+		}
+	}
+	for(int i=0; i<r.nInternalSpaceConstraints; i++){
+		SpaceConstraint* ctr=r.internalSpaceConstraintsList[i];
+		if(ctr->weightPercentage<100.0)
+			continue;
+		cl.clear(); dl.clear();
+		if(ctr->fitness(*this, r, cl, dl, &report)>0){
+			if(broken==0 && firstBroken!=nullptr)
+				*firstBroken=ctr->getDetailedDescription(r);
+			broken++;
+		}
+	}
+
+	nPlacedActivities=savedNPlaced;
+	_fitness=-1; //force a full recalculation next time fitness() is called
+	changedForMatrixCalculationTeachers=true;
+	changedForMatrixCalculationStudents=true;
+	changedForMatrixCalculationRooms=true;
+	return broken;
 }

@@ -8,6 +8,8 @@ qt_add_library(fetengine STATIC
     building.cpp building.h
     generate.cpp generate.h
     generate_pre.cpp generate_pre.h
+    gpusolver.cpp gpusolver.h
+    parallelgenerate.cpp parallelgenerate.h
     lockunlock.cpp lockunlock.h
     matrix.h
     messageboxes.h
@@ -22,6 +24,12 @@ qt_add_library(fetengine STATIC
     timetable.cpp timetable.h
     timetable_defs.cpp timetable_defs.h
     timetableexport.cpp timetableexport.h
+)
+
+# the OpenCL source of the GPU engine, read at run time as :/engine/gpusolver_kernel.cl
+qt_add_resources(fetengine "gpusolverkernel"
+    PREFIX "/engine"
+    FILES gpusolver_kernel.cl
 )
 
 target_include_directories(fetengine PUBLIC

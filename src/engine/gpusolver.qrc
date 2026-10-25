@@ -1,0 +1,5 @@
+<RCC>
+	<qresource prefix="/engine">
+		<file>gpusolver_kernel.cl</file>
+	</qresource>
+</RCC>

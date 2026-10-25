@@ -38,6 +38,7 @@ File generate.h
 
 //#include <QMutex>
 #include <QSemaphore>
+#include <QElapsedTimer>
 #include <mutex>
 //#include <semaphore>
 //#include <condition_variable>
@@ -64,6 +65,16 @@ public:
 	std::mutex myMutex;
 	
 	std::atomic<bool> isRunning;
+	
+	//GUI progress updates block the generator until the window has repainted, so they are rate-limited
+	QElapsedTimer progressTimer;
+	bool progressDue()
+	{
+		if(progressTimer.isValid() && progressTimer.elapsed()<100)
+			return false;
+		progressTimer.start();
+		return true;
+	}
 	
 	int nThread; //for multiple generation, otherwise it is 0.
 

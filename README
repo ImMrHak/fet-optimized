@@ -1084,6 +1084,32 @@ Running FET:
 	any order of elements should lead to the same generation results. Contrary behavior should be reported as a bug.
 
 
+Faster generation (several searches at once, GPU):
+	The time FET needs depends a lot on the random seed, so running several searches at once and keeping the first
+	timetable usually finishes much sooner. In the "Generate new timetable" dialog, choose the engine:
+	- CPU - classic: the original engine (one search). Only this engine can be paused and write partial timetables.
+	- CPU - all cores: one search per processor core (not per hyper-thread, which was slower in tests), each on its own thread with its own random seed.
+	- GPU: a search on the graphics card with OpenCL (any recent NVIDIA, AMD or Intel graphics driver).
+	  It works in the official mode only, with the most common constraint types; for any other constraint type it
+	  says so and you should use a CPU engine. On most school data it is slower than the CPU engines.
+	- GPU + CPU cores: the CPU searches and the GPU search together. After 5 seconds the GPU starts from the
+	  furthest partial timetable of the CPU searches and tries to repair the remaining clashes.
+	Every timetable from these engines is checked against all 100% constraints before it is accepted.
+
+	Command line: fet-cl --engine=cpu|gpu|combined --workers=N (N=0: one search per processor core),
+	--gpudevice=N, --gpuchains=N, and --listgpus to see the usable OpenCL devices.
+	With several searches the winning random seeds are printed; running the classic engine with those seeds
+	(--randomseeds10=... --randomseeds22=...) gives the same timetable.
+
+	Build options: CMake -DFET_FAST=ON or qmake "CONFIG+=fet_fast" turns off FET's internal assert() checks (faster;
+	the finished timetable is still checked). CMake -DFET_NATIVE=ON or qmake "CONFIG+=fet_native" tunes the program
+	for the computer it is built on (do not give such builds to other people). Release builds use link-time optimisation.
+	Profile-guided optimisation with GCC makes the engine about 15% faster and gives the same timetables:
+	build with CMake -DFET_PGO=generate (qmake "CONFIG+=fet_pgo_generate"), generate a few timetables with that build,
+	then rebuild everything in the same build directory with -DFET_PGO=use (qmake "CONFIG+=fet_pgo_use"; delete the
+	*.o files first, keep the *.gcda files).
+
+
 Languages (translations):
 
 	The translation files which the FET executable needs in order to be able to run in other languages are ending in .qm (like fet_**.qm)

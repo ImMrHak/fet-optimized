@@ -37,6 +37,7 @@ DEFINES += \
 	QT_STRICT_ITERATORS
 
 CONFIG += release warn_on c++17 cmdline no_keywords
+include(fet_speed.pri)
 
 QT -= gui
 

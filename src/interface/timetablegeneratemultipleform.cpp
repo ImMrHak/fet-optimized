@@ -77,7 +77,8 @@
 //Old comment below:
 //The 'static' qualifiers were commented out below (in 8 places) to address possible crashes on some platforms.
 //static QMutex fitnessMutexInThreads;
-static std::mutex fitnessMutexInThreads;
+//shared with the end-of-generation check in Generate (see Solution::brokenHardConstraints)
+static std::mutex& fitnessMutexInThreads=constraintCheckMutex;
 
 extern const QString COMPANY;
 extern const QString PROGRAM;

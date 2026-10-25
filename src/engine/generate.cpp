@@ -8819,6 +8819,7 @@ void Generate::generate(int maxSeconds, bool& restarted, bool& impossible, bool&
 
 	this->isThreaded=threaded;
 	this->isCommandLine=commandLine;
+	progressTimer.invalidate();
 	
 	//2019-09-14 - begin for the maximum bipartite matching algorithm
 	int j=0; //the number of real rooms
@@ -9623,16 +9624,16 @@ prevvalue:
 				myMutex.unlock();
 			}*/
 	
-			//if(semaphorePlacedActivity){
-			Q_EMIT activityPlaced(nThread, q+1);
-			if(threaded){
-				//std::mutex mtx;
-				//std::unique_lock<std::mutex> lck(mtx);
-				//semaphorePlacedActivity.acquire();
-				//cvForPlacedActivity.wait(lck);
+			//the window waits for each update, so send at most one every 100 ms
+			if(!threaded || progressDue()){
+				Q_EMIT activityPlaced(nThread, q+1);
+				if(threaded){
+					myMutex.unlock();
+					semaphorePlacedActivity.acquire();
+				}
+			}
+			else{
 				myMutex.unlock();
-				
-				semaphorePlacedActivity.acquire();
 			}
 			if(isCommandLine){
 				//if(writeCurrentAndHighestTimetable){
@@ -9649,6 +9650,9 @@ prevvalue:
 			nPlacedActivities=added_act+1;
 			
 			if(maxActivitiesPlaced<added_act+1){
+				//with several searches, the race loop in parallelgenerate.cpp reads these under myMutex
+				if(!threaded)
+					myMutex.lock();
 				time_t tmp;
 				time(&tmp);
 				timeToHighestStage=int(difftime(tmp, starting_time));
@@ -9671,23 +9675,21 @@ prevvalue:
 					
 					(*maxPlacedActivityStream)<<s<<Qt::endl;
 				}
+				if(!threaded)
+					myMutex.unlock();
 			}
 			
 			/*if(threaded){
 				myMutex.unlock();
 			}*/
-			Q_EMIT activityPlaced(nThread, added_act+1);
-			if(threaded){
-				//std::mutex mtx;
-				//std::unique_lock<std::mutex> lck(mtx);
-				//semaphorePlacedActivity.acquire();
-				//cvForPlacedActivity.wait(lck);
-				myMutex.unlock();
-
-				semaphorePlacedActivity.acquire();
-
-				//semaphorePlacedActivity.acquire();
-				myMutex.lock();
+			//the window waits for each update, so send at most one every 100 ms (and always the last one)
+			if(!threaded || progressDue() || added_act+1==gt.rules.nInternalActivities){
+				Q_EMIT activityPlaced(nThread, added_act+1);
+				if(threaded){
+					myMutex.unlock();
+					semaphorePlacedActivity.acquire();
+					myMutex.lock();
+				}
 			}
 			if(isCommandLine){
 				//if(writeCurrentAndHighestTimetable){
@@ -9723,13 +9725,26 @@ prevvalue:
 		}
 	}
 
+	{
+		//Safety net for builds without asserts: a finished timetable must break no 100% constraint.
+		Solution check;
+		check.copy(gt.rules, c);
+		QString what;
+		int nBroken=check.brokenHardConstraints(gt.rules, &what);
+		if(nBroken>0){
+			//same outcome as a failed assert, also in builds without asserts: never report a wrong timetable as a success
+			std::cerr<<"FET internal error: the generated timetable breaks "<<nBroken<<" compulsory constraint(s), first: "<<qPrintable(what)<<std::endl;
+			abort();
+		}
+	}
+
 	time_t end_time;
 	time(&end_time);
 	searchTime=int(difftime(end_time, starting_time));
 	searchTime-=pausedTime;
 	if(searchTime<0)
 		searchTime=0;
-	
+
 	if(isCommandLine || (!isCommandLine && VERBOSE)){
 		int gtm=int(difftime(end_time, starting_time))-pausedTime;
 		if(gtm<0)

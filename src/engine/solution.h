@@ -23,6 +23,8 @@ File solution.h
 
 #include "timetable_defs.h"
 
+#include <mutex>
+
 #include "matrix.h"
 
 #include <QString>
@@ -36,6 +38,10 @@ class FakeString;
 /**
 This class represents a solution (time and space allocation for the activities).
 */
+//The time and space constraint checkers (fitness) share scratch memory, so code that runs them while
+//other threads may also run them must hold this mutex.
+extern std::mutex constraintCheckMutex;
+
 class Solution{
 public:
 	QList<double> conflictsWeightList;
@@ -104,6 +110,11 @@ public:
 	append at this string an explanation of the conflicts.
 	*/
 	double fitness(Rules& r, FakeString* conflictsString=nullptr);
+
+	//Number of 100% weight constraints this timetable breaks (0 means it is a valid result).
+	//If firstBroken is not nullptr, it receives the description of the first broken one.
+	//Thread safe: it takes constraintCheckMutex (the constraint checkers share scratch memory).
+	int brokenHardConstraints(Rules& r, QString* firstBroken=nullptr);
 
 	void getTeachersTimetable(Rules& r, Matrix3D<int>& a, Matrix3D<QList<int>>& b);
 
